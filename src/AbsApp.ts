@@ -8,6 +8,7 @@ import { LogMessages } from "./utils/log/LogMessages";
 /**
  * @ref
  * - https://stackoverflow.com/questions/5076944/what-is-the-difference-between-null-and-undefined-in-javascript
+ * - https://github.com/keikaavousi/fake-store-api/tree/master/model
  */
 export class App {
 
