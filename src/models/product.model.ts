@@ -1,4 +1,4 @@
-import { Product } from "../interfaces/product.interface";
+import { Product, Rating } from "../interfaces/product.interface";
 
 
 export class ProductModel implements Product {
@@ -9,6 +9,7 @@ export class ProductModel implements Product {
         public price: number,
         public description: number,
         public image: string,
-        public category: string) {
+        public category: string,
+        public rating: Rating) {
     }
 }

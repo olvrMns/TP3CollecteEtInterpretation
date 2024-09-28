@@ -1,9 +1,9 @@
 import Dotenv from "dotenv";
 import Express, { Application } from "express";
-import { LOGGER } from "./utils/log/WinstonLogger";
 import { Server } from "http";
-import { LogMessages } from "./utils/log/LogMessages";
 import { FakeStore } from "./utils/fakeStore";
+import { LogMessages } from "./utils/log/logMessages";
+import { LOGGER } from "./utils/log/winstonLogger";
 
 /**
  * @ref

@@ -1,5 +1,5 @@
-import { existsSync, mkdirSync, openSync , PathLike, closeSync, writeFile } from "fs";
-import { LOGGER } from "./log/WinstonLogger";
+import { closeSync, existsSync, mkdirSync, openSync, writeFile } from "fs";
+import { LOGGER } from "./log/winstonLogger";
 
 export class FileUtils {
 

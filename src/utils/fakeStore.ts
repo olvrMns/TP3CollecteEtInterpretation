@@ -1,5 +1,5 @@
-import { FileUtils } from "./FileUtils";
-import { LogMessages } from "./log/LogMessages";
+import { FileUtils } from "./fileUtils";
+import { LogMessages } from "./log/logMessages";
 
 /**
  * @ref 
