@@ -1,3 +1,4 @@
+import { Entity } from "./entity.interface"
 
 export interface Name {
     firstName: string,
@@ -21,8 +22,7 @@ export interface Address {
  * @ref 
  * - https://github.com/keikaavousi/fake-store-api/blob/master/model/user.js
  */
-export interface User {
-    id: number,
+export interface User extends Entity {
     email: string,
     username: string,
     password: string,
