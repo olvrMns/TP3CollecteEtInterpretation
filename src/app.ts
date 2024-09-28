@@ -1,3 +1,3 @@
 import { App } from "./AbsApp";
 
-App.GetInstance().start();
+(async () => (await App.GetInstance()).start())();

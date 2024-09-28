@@ -1,6 +1,12 @@
-import Winston, { createLogger, Logger, format, config, transports, Logform } from "winston";
-import { LOG_DIRECTORY_PATH, LOG_EXTENSION } from "./LogFileCreate";
+import { createLogger, Logger, format, config, transports, Logform } from "winston";
 
+
+const LOG_DIRECTORY_PATH: string = "./LOGS/";
+const LOG_EXTENSION = ".log";
+
+/**
+ * @note transports.File creates the files for you if they don't exists
+ */
 const getTransportsFile = (level: string): transports.FileTransportInstance => {
     return new transports.File({
         filename: LOG_DIRECTORY_PATH + level + LOG_EXTENSION,

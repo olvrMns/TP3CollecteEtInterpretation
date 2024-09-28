@@ -1,9 +1,9 @@
 import Dotenv from "dotenv";
-import Express, { Application, Request, Response } from "express";
-import { createLoggingFileStructure } from "./utils/log/LogFileCreate";
+import Express, { Application } from "express";
 import { LOGGER } from "./utils/log/WinstonLogger";
 import { Server } from "http";
 import { LogMessages } from "./utils/log/LogMessages";
+import { FakeStore } from "./utils/fakeStore";
 
 /**
  * @ref
@@ -15,12 +15,11 @@ export class App {
     private application: Application = Express();
     private server: Server | null = null;
 
-    private App() {
-        createLoggingFileStructure();
-        Dotenv.config({path: "./.env"});
-    }
+    private App() {}
 
-    public static GetInstance(): App {
+    public static async GetInstance(): Promise<App> {
+        Dotenv.config({path: "./.env"});
+        await FakeStore.setAllData();
         return new App();
     }
 

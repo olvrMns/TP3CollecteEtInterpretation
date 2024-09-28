@@ -8,4 +8,7 @@
 export class LogMessages {
 
     public static get SERVER_START(): string { return "Server started successfully..." }
+    public static get FAKE_STORE_DATA_FILE_ERROR(): string { return "Something went wrong while writing the fake data..." }
+    public static get FAKE_STORE_DATA_FILE_SUCCESS(): string { return "Fake data writing operation was successfull..." }
+
 }
