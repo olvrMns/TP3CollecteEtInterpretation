@@ -1,5 +1,4 @@
 import { FileUtils } from "./fileUtils";
-import { LogMessages } from "./log/logMessages";
 
 /**
  * @ref 
@@ -14,16 +13,14 @@ export class FakeStore {
 
     private static async setData(endpoint: string, filePath: string) {
         let fetchResponse: any = (await fetch(endpoint));
-        FileUtils.writeToFile(
+        FileUtils.writeFile_(
             filePath, 
-            JSON.stringify(await fetchResponse.json()), 
-            LogMessages.FAKE_STORE_DATA_FILE_SUCCESS, 
-            LogMessages.FAKE_STORE_DATA_FILE_ERROR
+            JSON.stringify(await fetchResponse.json())
         );
     }
     
     public static async setAllData(): Promise<void> {
-        FileUtils.createDirectory(this.DATA_DIRECTORY_PATH);
+        FileUtils.createDirectory_(this.DATA_DIRECTORY_PATH);
         await this.setData('https://fakestoreapi.com/products', this.PRODUCTS_DATA_PATH);
         await this.setData('https://fakestoreapi.com/users', this.USER_DATA_PATH);
     }

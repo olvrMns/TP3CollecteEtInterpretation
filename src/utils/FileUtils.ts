@@ -1,21 +1,45 @@
-import { closeSync, existsSync, mkdirSync, openSync, writeFile } from "fs";
+import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { LOGGER } from "./log/winstonLogger";
+import { LogMessages } from "./log/logMessages";
 
+/**
+ * @ref
+ * - https://stackoverflow.com/questions/17699599/node-js-check-if-file-exists
+ * - https://nodejs.org/dist/latest-v10.x/docs/api/fs.html
+ */
 export class FileUtils {
 
-    public static createDirectory(path: string): void {
-        if (!existsSync(path)) mkdirSync(path);
+    private static async execute(ioOperation: () => Promise<void>): Promise<boolean> {
+        try {
+            await ioOperation();
+            LOGGER.info(LogMessages.IO_OPERATION_SUCCESSFULL);
+            return true;
+        } catch (error) { 
+            LOGGER.error(error);
+            return false 
+        }
     }
 
-    public static createFile(path: string): void {
-        if (!existsSync(path)) closeSync(openSync(path, "w"));
+    public static async createDirectory_(path: string): Promise<boolean> {
+        return this.execute(async () => await mkdir(path));
     }
 
-    public static writeToFile(path: string, content: string, successMessage: string, errorMessage: string): void {
-        this.createFile(path);
-        writeFile(path, content, (error: NodeJS.ErrnoException | null): void => {
-            if (error) LOGGER.error(errorMessage);
-            else LOGGER.info(successMessage);
-        });
+    public static async removeFile_(path: string): Promise<boolean> {
+        return this.execute(async () => await rm(path));
+    }
+
+    public static async writeFile_(path: string, content: string): Promise<boolean> {
+        return this.execute(async () => await writeFile(path, content));
+    }
+
+    public static async readFile_(path: string): Promise<string | null> {
+        try {
+            let buffer: Buffer = await readFile(path);
+            LOGGER.info(LogMessages.IO_OPERATION_SUCCESSFULL);
+            return buffer.toString();
+        } catch (error) {
+            LOGGER.error(error);
+            return null;
+        }
     }
 }
