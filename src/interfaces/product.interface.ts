@@ -12,7 +12,7 @@ export interface Rating {
 export interface Product extends Entity {
     title: string,
     price: number,
-    description: number,
+    description: string,
     image: string,
     category: string,
     rating: Rating
