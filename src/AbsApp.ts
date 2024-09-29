@@ -4,7 +4,6 @@ import { Server } from "http";
 import { FakeStore } from "./utils/fakeStore";
 import { LogMessages } from "./utils/log/logMessages";
 import { LOGGER } from "./utils/log/winstonLogger";
-import { ProductService } from "./services/product.service";
 
 /**
  * @ref
@@ -21,12 +20,11 @@ export class App {
     public static async GetInstance(): Promise<App> {
         Dotenv.config({path: "./.env"});
         await FakeStore.setAllData();
-        //console.log(await ProductService.addProduct({category: "slt", description: "slt", id: 25, image: "slt", price: 54, rating: {count: 5, rate: 5}, title: "slt"}));
         return new App();
     }
 
     public start(): void {
-        this.server = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START))
+        this.server = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
     }
 
     public close(): void {
