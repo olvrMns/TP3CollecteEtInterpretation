@@ -2,7 +2,7 @@ import { Entity } from "./entity.interface";
 import { Request, Response } from "express";
 
 
-export interface Controller<T extends Entity> {
+export interface Controller {
 
     getOne(request: Request, response: Response): Promise<void>;
     getAll(request: Request, response: Response): Promise<void>;

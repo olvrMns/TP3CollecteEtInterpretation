@@ -4,6 +4,7 @@ import { Server } from "http";
 import { FakeStore } from "./utils/fakeStore";
 import { LogMessages } from "./utils/log/logMessages";
 import { LOGGER } from "./utils/log/winstonLogger";
+import { router as productRouter } from "./routes/product.route";
 
 /**
  * @ref
@@ -23,8 +24,14 @@ export class App {
         return new App();
     }
 
+    public setRoutes() {
+        this.application.use(Express.json());
+        this.application.get("/product", productRouter);
+    }
+
     public start(): void {
         this.server = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
+        this.setRoutes();
     }
 
     public close(): void {

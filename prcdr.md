@@ -7,6 +7,7 @@
 - npm install swagger-ui-express
 - npm install swagger-jsdoc
 - npm install dotenv
+- npm install http-status-codes
 - npm install --save-dev nodemon
 - npm install --save-dev typescript
 - npm install --save-dev ts-node
