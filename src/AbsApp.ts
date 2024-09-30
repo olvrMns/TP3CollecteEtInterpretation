@@ -4,7 +4,7 @@ import { Server } from "http";
 import { FakeStore } from "./utils/fakeStore";
 import { LogMessages } from "./utils/log/logMessages";
 import { LOGGER } from "./utils/log/winstonLogger";
-import { router as productRouter } from "./routes/product.route";
+import { router as productRouter} from "./routes/product.route";
 
 /**
  * @ref
@@ -15,10 +15,11 @@ export class App {
 
     private application: Application = Express();
     private server: Server | null = null;
+    private version: string = "/v1";
 
     private App() {}
 
-    public static async GetInstance(): Promise<App> {
+    public static async getInstance(): Promise<App> {
         Dotenv.config({path: "./.env"});
         await FakeStore.setAllData();
         return new App();
@@ -26,7 +27,7 @@ export class App {
 
     public setRoutes() {
         this.application.use(Express.json());
-        this.application.get("/product", productRouter);
+        this.application.use(this.version, productRouter);
     }
 
     public start(): void {

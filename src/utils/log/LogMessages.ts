@@ -17,6 +17,6 @@ export class LogMessages {
 
     public static get IO_OPERATION_SUCCESSFULL(): string { return "I/O operation was successfull..." }
 
-
+    public static get GET_ONE_PRODUCT_REQUEST_RECEIVED(): string { return "Get one product request received..." }
 
 }

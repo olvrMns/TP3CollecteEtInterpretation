@@ -12,4 +12,13 @@ export class ProductModel implements Product {
         public category: string,
         public rating: Rating) {
     }
+
+    public static getInstance(
+        id: number,
+        title: string, 
+        price: number, 
+        description: string, 
+        image: string, 
+        category: string, 
+        rating: Rating) {}
 }

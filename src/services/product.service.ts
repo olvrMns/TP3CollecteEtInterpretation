@@ -41,4 +41,13 @@ export class ProductService {
         return await this.jsonUtils.removeObject(product, FakeStore.PRODUCTS_DATA_PATH);
     }
 
+    public static async getUniqueId(): Promise<number> {
+        let products: Product[] = await this.getProducts();
+        let ids: number[] = [];
+        let nId: number = 1;
+        for (let elem: number = 0; elem < products.length; elem++) ids.push(products[elem].id);
+        while (ids.includes(nId)) nId++;
+        return nId;
+    }
+
 }
