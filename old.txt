@@ -41,3 +41,31 @@ export class FileUtils {
         // })
     }
 }
+
+=========================================================================================
+========================================================================================
+
+public async _getOne(attribute: string): Promise<(request: Request, response: Response) => Promise<void>> {
+        return async (request: Request, response: Response): Promise<void> => {
+            try {
+                LOGGER.info(LogMessages.GET_ONE_PRODUCT_REQUEST_RECEIVED);
+                let product: Product | null = await ProductService.getProduct(attribute, request.params.v);
+                LOGGER.info("ANGWOANGOAW")
+                response.status(StatusCodes.OK).send(product);
+            } catch (error) { response.status(StatusCodes.BAD_REQUEST); }
+        }
+    }
+
+public static async getProduct(attribute: string, value: any): Promise<Product | null> {
+        let products: Product[] = await this.getProducts();
+        for (let elem: number = 0; elem < products.length; elem++) 
+            if (products[elem]?.[attribute].ToString() == value) return products[elem];
+        return null;
+}
+
+async function setAttributeRoute(router: Router, attribute: string, endpoint: string): Promise<void> {
+    await productController._getOne(attribute).then(res => {
+        
+        router.get(endpoint, res);
+    })
+}
