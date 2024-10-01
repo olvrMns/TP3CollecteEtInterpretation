@@ -5,6 +5,7 @@ import { FakeStore } from "./utils/fakeStore";
 import { LogMessages } from "./utils/log/logMessages";
 import { LOGGER } from "./utils/log/winstonLogger";
 import { router as productRouter} from "./routes/product.route";
+import { ProductService } from "./services/product.service";
 
 /**
  * @ref

@@ -69,3 +69,17 @@ async function setAttributeRoute(router: Router, attribute: string, endpoint: st
         router.get(endpoint, res);
     })
 }
+
+/=====================================
+
+public static async getProductById(id: number): Promise<Product | null> {
+        let products: Product[] = await this.getProducts();
+        for (let elem: number = 0; elem < products.length; elem++) if (products[elem].id == id) return products[elem];
+        return null;
+    }
+
+    public static async getProductByTitle(title: string): Promise<Product | null> {
+        let products: Product[] = await this.getProducts();
+        for (let elem: number = 0; elem < products.length; elem++) if (products[elem].title == title) return products[elem];
+        return null;
+    }

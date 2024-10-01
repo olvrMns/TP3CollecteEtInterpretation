@@ -19,15 +19,14 @@ export class ProductController implements Controller {
     async getOne(request: Request, response: Response): Promise<void> {
         try {
             LOGGER.info(LogMessages.GET_ONE_PRODUCT_REQUEST_RECEIVED);
-            let product: Product | null = await ProductService.getProductById(parseInt(request.params.id));
+            let product: Product | null = await ProductService.getProduct(request.params.attribute, request.params.value);
             response.status(StatusCodes.OK).send(product);
-        } catch (error) {
-            response.status(StatusCodes.BAD_REQUEST);
-        }
+        } catch (error) { response.status(StatusCodes.BAD_REQUEST); }
     }
 
     async getAll(request: Request, response: Response): Promise<void> {
         try {
+            LOGGER.info(LogMessages.GET_ALL_PRODUCT_REQUEST_RECEIVED);
             let products: Product[] = await ProductService.getProducts();
             response.status(StatusCodes.OK).send(products);
         } catch (error) {
@@ -37,6 +36,7 @@ export class ProductController implements Controller {
 
     async addOne(request: Request, response: Response): Promise<void> {
         try {
+            LOGGER.info(LogMessages.ADD_ONE_PRODUCT_REQUEST_RECEIVED);
             let product: Product = new ProductModel(
                 await ProductService.getUniqueId(),
                 request.body.title,
@@ -54,7 +54,14 @@ export class ProductController implements Controller {
     }
 
     async removeOne(request: Request, response: Response): Promise<void> {
-        
+        try {
+            LOGGER.info(LogMessages.REMOVE_ONE_PRODUCT_REQUEST_RECEIVED);
+            let product: Product | null = await ProductService.getProduct(request.params.attribute, request.params.value);
+            await ProductService.removeProduct(product as Product);
+            response.sendStatus(StatusCodes.OK);
+        } catch (error) {
+            response.sendStatus(StatusCodes.BAD_REQUEST);
+        }
     }
 
 }

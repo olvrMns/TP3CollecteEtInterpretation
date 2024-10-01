@@ -21,15 +21,13 @@ export class ProductService {
         return products.filter(product => product.price >= min && product.price <= max);
     }
 
-    public static async getProductById(id: number): Promise<Product | null> {
+    /**
+     * @note ...
+     */
+    public static async getProduct(attributeName: string, value: string): Promise<Product | null> {
         let products: Product[] = await this.getProducts();
-        for (let elem: number = 0; elem < products.length; elem++) if (products[elem].id == id) return products[elem];
-        return null;
-    }
-
-    public static async getProductByTitle(title: string): Promise<Product | null> {
-        let products: Product[] = await this.getProducts();
-        for (let elem: number = 0; elem < products.length; elem++) if (products[elem].title == title) return products[elem];
+        for (let elem: number = 0; elem < products.length; elem++) 
+            if (products[elem]?.[attributeName] + "" == value) return products[elem] 
         return null;
     }
 

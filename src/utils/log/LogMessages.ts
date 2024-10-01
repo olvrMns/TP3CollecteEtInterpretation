@@ -18,5 +18,9 @@ export class LogMessages {
     public static get IO_OPERATION_SUCCESSFULL(): string { return "I/O operation was successfull..." }
 
     public static get GET_ONE_PRODUCT_REQUEST_RECEIVED(): string { return "Get one product request received..." }
+    public static get REMOVE_ONE_PRODUCT_REQUEST_RECEIVED(): string { return "Delete one product request received..." }
+    public static get ADD_ONE_PRODUCT_REQUEST_RECEIVED(): string { return "Add one product request received..." }
+    public static get GET_ALL_PRODUCT_REQUEST_RECEIVED(): string { return "Get all product request received..." }
 
+    
 }

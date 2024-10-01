@@ -5,6 +5,6 @@ export const router: Router = Router();
 const productController: ProductController = new ProductController();
 
 router.get("/product", productController.getAll);
-router.get("/product/id=:id", productController.getOne);
+router.get("/product/att=:attribute/v=:value", productController.getOne);
 router.post("/product/save", productController.addOne);
-router.patch("/product/remove", productController.removeOne);
+router.patch("/product/remove/att=:attribute/v=:value", productController.removeOne);
