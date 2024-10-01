@@ -20,8 +20,10 @@ export class FakeStore {
     }
     
     public static async setAllData(): Promise<void> {
-        FileUtils.createDirectory_(this.DATA_DIRECTORY_PATH);
-        await this.setData('https://fakestoreapi.com/products', this.PRODUCTS_DATA_PATH);
-        await this.setData('https://fakestoreapi.com/users', this.USER_DATA_PATH);
+        if (!await FileUtils.exists(this.PRODUCTS_DATA_PATH) && !await FileUtils.exists(this.USER_DATA_PATH)) {
+            FileUtils.createDirectory_(this.DATA_DIRECTORY_PATH);
+            await this.setData('https://fakestoreapi.com/products', this.PRODUCTS_DATA_PATH);
+            await this.setData('https://fakestoreapi.com/users', this.USER_DATA_PATH);
+        }
     }
 }

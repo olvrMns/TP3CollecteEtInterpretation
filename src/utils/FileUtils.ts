@@ -1,4 +1,4 @@
-import { mkdir, readFile, rm, writeFile } from "fs/promises";
+import { mkdir, readFile, rm, writeFile, access, constants } from "fs/promises";
 import { LOGGER } from "./log/winstonLogger";
 import { LogMessages } from "./log/logMessages";
 
@@ -18,6 +18,18 @@ export class FileUtils {
             LOGGER.error(error);
             return false 
         }
+    }
+
+    /**
+     * @ref
+     * - https://barker.codes/blog/asynchronously-check-if-a-file-exists-in-node-js/
+     */
+    public static async exists(filePath: string): Promise<boolean> {
+        let res: boolean = true;
+        await access(filePath, constants.F_OK)
+        .then(() => { res = true; })
+        .catch((error) => {res = false});
+        return res;
     }
 
     public static async createDirectory_(path: string): Promise<boolean> {
