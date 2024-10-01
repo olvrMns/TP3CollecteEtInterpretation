@@ -15,5 +15,6 @@ export interface Product extends Entity {
     description: string,
     image: string,
     category: string,
+    stock: number,
     rating: Rating
 }

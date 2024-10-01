@@ -42,6 +42,7 @@ export class ProductController implements Controller {
                 request.body.description,
                 request.body.image,
                 request.body.category,
+                request.body.stock,
                 request.body.rating
             );
             await ProductService.addProduct(product);
@@ -64,6 +65,19 @@ export class ProductController implements Controller {
             if (!params.min && !params.max) response.status(StatusCodes.OK).send(await ProductService.getProducts());
             let min: number = !params.min ? 0 : parseFloat(params.min);
             let max: number = !params.max ? Number.MAX_VALUE : parseFloat(params.max);
+            response.status(StatusCodes.OK).send(await ProductService.getProductsByPrice(min, max));
+        } catch (error) { response.sendStatus(StatusCodes.BAD_REQUEST); }
+    }
+
+    /**
+     * @note needs refactoring (copy) 
+     */
+    public async getAllByStock(request: Request, response: Response): Promise<void> {
+        try {
+            const {params} = request;
+            if (!params.min && !params.max) response.status(StatusCodes.OK).send(await ProductService.getProducts());
+            let min: number = !params.min ? 0 : parseInt(params.min);
+            let max: number = !params.max ? Number.MAX_VALUE : parseInt(params.max);
             response.status(StatusCodes.OK).send(await ProductService.getProductsByPrice(min, max));
         } catch (error) { response.sendStatus(StatusCodes.BAD_REQUEST); }
     }

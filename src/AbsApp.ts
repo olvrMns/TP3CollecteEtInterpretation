@@ -11,6 +11,7 @@ import { ProductService } from "./services/product.service";
  * @ref
  * - https://stackoverflow.com/questions/5076944/what-is-the-difference-between-null-and-undefined-in-javascript
  * - https://github.com/keikaavousi/fake-store-api/tree/master/model
+ * - https://stackoverflow.com/questions/11744975/enabling-https-on-express-js (https)
  */
 export class App {
 

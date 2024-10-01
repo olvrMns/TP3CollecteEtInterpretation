@@ -10,6 +10,7 @@ export class ProductModel implements Product {
         public description: string,
         public image: string,
         public category: string,
+        public stock: number = 0,
         public rating: Rating) {
     }
 

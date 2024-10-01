@@ -21,6 +21,11 @@ export class ProductService {
         return products.filter(product => product.price >= min && product.price <= max);
     }
 
+    public static async getProductsByStock(min: number, max: number): Promise<Product[]> {
+        let products: Product[] = await this.getProducts();
+        return products.filter(product => product.stock >= min && product.stock <= max);
+    }
+
     /**
      * @note ...
      */
