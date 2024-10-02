@@ -15,3 +15,17 @@ export class UserModel implements User {
     }
 
 }
+
+export class UserInfo {
+
+    constructor(
+        public email: string, 
+        public name: Name, 
+        public username: string) {}
+
+        
+    public static getInstance(email: string, name: Name, username: string): UserInfo {
+        return new UserInfo(email, name, username);
+    }
+
+}
