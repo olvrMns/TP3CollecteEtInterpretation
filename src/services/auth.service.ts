@@ -1,4 +1,6 @@
 import { hash, compare, genSalt } from 'bcryptjs';
+import { UserService } from './user.service';
+import { User } from '../interfaces/user.interface';
 
 /**
  * @ref
@@ -17,8 +19,14 @@ export class AuthService {
         return await compare(rawPassword, hashedPassword);
     }
 
-    public static async authenticate(username: string, rawPassword: string): Promise<boolean> {
-        return true;
+    /**
+     * email: 'morrison@gmail.com', username: 'mor_2314', password: '83r5^_',
+     * REGUALR EXPRESSION IMP TO DIFFERENTIATE EMAIL/USERNAME
+     */
+    public static async authenticate(usernameOrEmail: string, rawPassword: string): Promise<boolean> {
+        let user: User | null= await UserService.getUser("username", usernameOrEmail);
+        if (!user) user = await UserService.getUser("email", usernameOrEmail);
+        return user ? this._comparePwd(rawPassword, user.password) : false;
     }     
 
 
