@@ -23,7 +23,7 @@ export class FakeStore {
     private static async setUsersData(): Promise<void> {
         let fetchResponse: any = await fetch(this.USERS_FAKEDATA_ENDPOINT);
         let jsonUtils: JsonUtils<User> = new JsonUtils<User>();
-        let users: User[] = jsonUtils.toArray(await fetchResponse.json());
+        let users: User[] = jsonUtils.toArray(JSON.stringify(await fetchResponse.json()));
         for (let elem = 0; elem < users.length; elem++) users[elem].password = await AuthService._hashPwd(users[elem].password);
         await FileUtils.writeFile_(this.USERS_DATA_PATH, JSON.stringify(users));
     }
@@ -31,7 +31,7 @@ export class FakeStore {
     private static async setProducsData(): Promise<void> {
         let fetchResponse: any = await fetch(this.PRODUCTS_FAKEDATA_ENDPOINT);
         let jsonUtils: JsonUtils<Product> = new JsonUtils<Product>();
-        let products: ProductModel[] = jsonUtils.toArray(await fetchResponse.json());
+        let products: ProductModel[] = jsonUtils.toArray(JSON.stringify(await fetchResponse.json()));
         for (let elem = 0; elem < products.length; elem++) products[elem].stock = Math.floor(Math.random() * 20);
         await FileUtils.writeFile_(this.PRODUCTS_DATA_PATH, JSON.stringify(products));
     }

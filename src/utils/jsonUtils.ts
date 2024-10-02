@@ -9,7 +9,7 @@ import { FileUtils } from "./fileUtils";
 export class JsonUtils<T extends Entity> {
 
     public toArray(rawJsonData: any): T[] {
-        return JSON.parse(JSON.stringify(rawJsonData));
+        return JSON.parse(rawJsonData);
     }
 
     public toObject(rawJsonData: any): T {

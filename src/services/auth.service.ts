@@ -17,12 +17,9 @@ export class AuthService {
         return await compare(rawPassword, hashedPassword);
     }
 
-    public static async _login() {
-    
-    }
+    public static async authenticate(username: string, rawPassword: string): Promise<boolean> {
+        return true;
+    }     
 
-    public static async _signup() {
-        
-    }
 
 }
