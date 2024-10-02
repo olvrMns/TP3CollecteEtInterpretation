@@ -5,13 +5,14 @@ import { FakeStore } from "./utils/fakeStore";
 import { LogMessages } from "./utils/log/logMessages";
 import { LOGGER } from "./utils/log/winstonLogger";
 import { router as productRouter} from "./routes/product.route";
-import { ProductService } from "./services/product.service";
+import { router as authRouter} from "./routes/auth.route";
 
 /**
  * @ref
  * - https://stackoverflow.com/questions/5076944/what-is-the-difference-between-null-and-undefined-in-javascript
  * - https://github.com/keikaavousi/fake-store-api/tree/master/model
  * - https://stackoverflow.com/questions/11744975/enabling-https-on-express-js (https)
+ * - https://stackoverflow.com/questions/58684642/should-i-call-dotenv-in-every-node-js-file
  */
 export class App {
 
@@ -29,6 +30,7 @@ export class App {
 
     public setRoutes() {
         this.application.use(Express.json());
+        this.application.use(this.version, authRouter);
         this.application.use(this.version, productRouter);
     }
 

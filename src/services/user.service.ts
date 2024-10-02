@@ -1,7 +1,9 @@
-// import { UserController } from "../controllers/user.controller";
+import { FakeStore } from "../utils/fakeStore";
 
-
-// export class UserService {
+export class UserService {
     
+    public static async getPwd(username: string) {
+        
+    }
     
-// }
+}

@@ -7,7 +7,7 @@ const productController: ProductController = new ProductController();
 
 router.get(PRODUCT_ENDPOINT_PREFIX, productController.getAll);
 router.get(PRODUCT_ENDPOINT_PREFIX + "/minPrice=:min&maxPrice=:max", productController.getAllByPrice);
-router.get(PRODUCT_ENDPOINT_PREFIX + "/minStock=:min&maxStock=:max", productController.getAllByStock);
+router.get(PRODUCT_ENDPOINT_PREFIX + "/minStock=:min&maxStock=:max", productController.getAllByStock); //needs fix
 router.get(PRODUCT_ENDPOINT_PREFIX + "/att=:attribute&v=:value", productController.getOne);
 router.post(PRODUCT_ENDPOINT_PREFIX + "/save", productController.addOne);
 router.patch(PRODUCT_ENDPOINT_PREFIX + "/remove/att=:attribute&v=:value", productController.removeOne);

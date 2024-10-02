@@ -9,11 +9,11 @@ import { FileUtils } from "./fileUtils";
 export class JsonUtils<T extends Entity> {
 
     public toArray(rawJsonData: any): T[] {
-        return JSON.parse(rawJsonData);
+        return JSON.parse(JSON.stringify(rawJsonData));
     }
 
     public toObject(rawJsonData: any): T {
-        return JSON.parse(rawJsonData);
+        return JSON.parse(JSON.stringify(rawJsonData));
     } 
 
     public async addObject(object: T, path: string): Promise<boolean> {

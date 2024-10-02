@@ -83,3 +83,18 @@ public static async getProductById(id: number): Promise<Product | null> {
         for (let elem: number = 0; elem < products.length; elem++) if (products[elem].title == title) return products[elem];
         return null;
     }
+
+    private static async setData(endpoint: string, filePath: string): Promise<void> {
+        let fetchResponse: any = (await fetch(endpoint));
+        FileUtils.writeFile_(
+            filePath, 
+            await fetchResponse.json()
+        );
+    }
+
+    private static async setData<T extends Entity, R>(dataEndpoint: string, e: (object: any, index: number) => Promise<R>, dataPath: string, att: string) {
+        let fetchResponse: any = await fetch(dataEndpoint);
+        let jsonUtils: JsonUtils<T> = new JsonUtils<T>();
+        let objects: T[] = jsonUtils.toArray(await fetchResponse.json());
+        for (let elem = 0; elem < objects.length; elem++) objects[elem]?.[att] = await e();
+    }
