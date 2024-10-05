@@ -29,7 +29,7 @@ export class AuthService {
     /**
      * email: 'morrison@gmail.com', username: 'mor_2314', password: '83r5^_',
      */
-    public static async authenticate(usernameOrEmail: string, rawPassword: string): Promise<User | null> {
+    public static async authenticateUser(usernameOrEmail: string, rawPassword: string): Promise<User | null> {
         let user: User | null = null;
         if (RegexUtils.testEmail(usernameOrEmail)) user = await UserService.getUser("email", usernameOrEmail);
         else user = await UserService.getUser("username", usernameOrEmail);

@@ -10,16 +10,19 @@ export class AuthController {
 
     public static async isAuthenticated(request: Request, response: Response, next: NextFunction): Promise<void> {
         try {
-            LOGGER.info("IN ROUTE")
-            response.send("salut");
-        } catch (error) {
-            response.send("bye");
-        }
+            let authorizationString: string | undefined = request.headers.authorization;
+            let token: string | null = null;
+            if (authorizationString) token = authorizationString.split(' ')[1];
+            else throw new Error("Not logged in exception");
+            if (token) await AuthService.verifyToken(token);
+            else throw new Error("Token exception");
+            next();
+        } catch (error) { response.status(StatusCodes.UNAUTHORIZED).send(error); }
     }
 
     public static async login(request: Request, response: Response): Promise<void> {
         try {
-            let user: User | null = await AuthService.authenticate(request.body.username, request.body.password);
+            let user: User | null = await AuthService.authenticateUser(request.body.username, request.body.password);
             if (user) response.status(StatusCodes.OK).send(await AuthService.createToken(user));
             else throw new Error();
         } catch (error) { response.status(StatusCodes.BAD_REQUEST).send(error); }
