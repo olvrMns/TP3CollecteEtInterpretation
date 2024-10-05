@@ -3,6 +3,8 @@ import { LOGGER } from "../utils/log/winstonLogger";
 import { StatusCodes } from "http-status-codes";
 import { AuthService } from "../services/auth.service";
 import { User } from "../interfaces/user.interface";
+import { UserModel } from "../models/user.model";
+import { UserService } from "../services/user.service";
 
 export class AuthController {
 
@@ -25,9 +27,14 @@ export class AuthController {
 
     public static async signup(request: Request, response: Response) {
         try {
-
-        } catch (error) {
-
-        }
+            let user: User = UserModel.getInstance(
+                await UserService.jsonUtils.getUniqueId(await UserService.getUsers()),
+                request.body.email,
+                request.body.username,
+                await AuthService._hashPwd(request.body.password),
+                request.body.name
+            );
+            response.status(StatusCodes.CREATED).send(await UserService.addUser(user));
+        } catch (error) { response.sendStatus(StatusCodes.BAD_REQUEST); }
     }
 }

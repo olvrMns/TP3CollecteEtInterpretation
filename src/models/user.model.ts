@@ -10,8 +10,12 @@ export class UserModel implements User {
         public username: string, 
         public password: string,
         public name: Name,
-        public address: Address,
-        public phone: string) {
+        public address: Address | null,
+        public phone: string | null) {
+    }
+
+    public static getInstance(id: number, email: string, username: string, password: string, name: Name) {
+        return new UserModel(id, email, username, password, name, null, null);
     }
 
 }

@@ -5,7 +5,7 @@ import { JsonUtils } from "../utils/jsonUtils";
 
 export class UserService {
     
-    private static jsonUtils: JsonUtils<User> = new JsonUtils<User>();
+    public static jsonUtils: JsonUtils<User> = new JsonUtils<User>();
     
     public static async getUsers(): Promise<User[]> {
         return this.jsonUtils.toArray(await FileUtils.readFile_(FakeStore.USERS_DATA_PATH));

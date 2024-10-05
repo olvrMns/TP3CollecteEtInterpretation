@@ -5,4 +5,4 @@ export const router: Router = Router();
 
 //router.get("/*", AuthController.isAuthenticated);
 router.post("/login", AuthController.login);
-router.get("/signup", AuthController.signup)
+router.post("/signup", AuthController.signup)

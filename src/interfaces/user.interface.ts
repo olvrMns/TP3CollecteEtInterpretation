@@ -27,7 +27,7 @@ export interface User extends Entity {
     username: string,
     password: string,
     name: Name,
-    address: Address,
-    phone: string
+    address: Address | null,
+    phone: string | null
 }
 

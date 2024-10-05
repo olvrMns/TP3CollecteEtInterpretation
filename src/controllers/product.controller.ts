@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ParamsDictionary } from 'express-serve-static-core';
+//import { ParamsDictionary } from 'express-serve-static-core';
 import { Controller } from "../interfaces/controller.interface";
 import { Product } from "../interfaces/product.interface";
 import { StatusCodes } from 'http-status-codes';
@@ -46,7 +46,7 @@ export class ProductController implements Controller {
                 request.body.rating
             );
             await ProductService.addProduct(product);
-            response.status(StatusCodes.OK).send(product);
+            response.status(StatusCodes.CREATED).send(product);
         } catch (error) { response.status(StatusCodes.BAD_REQUEST); }
     }
 
