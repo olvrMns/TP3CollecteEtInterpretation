@@ -13,6 +13,8 @@ import { UserInfo } from '../models/user.model';
  * - https://www.youtube.com/watch?v=LZq0G8WUaII&list=PL4cUxeGkcC9iqqESP8335DA5cRFp8loyp&index=10
  * - https://dev.to/juliecherner/authentication-with-jwt-tokens-in-typescript-with-express-3gb1
  * - https://gist.github.com/harveyconnor/eaadcb5e465a96e4211aa562541231a8
+ * - https://stackoverflow.com/questions/35131333/jsonwebtoken-sign-fails-with-expiresin-option-set
+ * - https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs
  */
 export class AuthService {
 
@@ -27,19 +29,25 @@ export class AuthService {
     /**
      * email: 'morrison@gmail.com', username: 'mor_2314', password: '83r5^_',
      */
-    public static async authenticate(usernameOrEmail: string, rawPassword: string): Promise<boolean> {
+    public static async authenticate(usernameOrEmail: string, rawPassword: string): Promise<User | null> {
         let user: User | null = null;
         if (RegexUtils.testEmail(usernameOrEmail)) user = await UserService.getUser("email", usernameOrEmail);
         else user = await UserService.getUser("username", usernameOrEmail);
-        return user ? this._comparePwd(rawPassword, user.password) : false;
+        if (user)  user = await this._comparePwd(rawPassword, user.password) ? user : null;      
+        return user; 
     }     
 
-    public static getToken(user: User, expiresIn: string): Promise<string | null> {
+    public static createToken(user: User): Promise<string | null> {
         return new Promise((resolve, reject) => {
-            sign(UserInfo.getInstance(user.email, user.name, user.username), process.env.PK as Secret, {expiresIn: expiresIn}, (error: Error | null, token: string | undefined) => {
-                if (!error && token) resolve(token as string);
-                reject(null);
-            });
+            sign(
+                {userInfo: UserInfo.getInstance(user.email, user.name, user.username)}, 
+                process.env.PK as Secret, 
+                {expiresIn: parseInt(process.env.EXPIRES_IN as string)}, 
+                (error: Error | null, token: string | undefined) => {
+                    if (!error && token) resolve(token as string);
+                    reject(null);
+                }
+            );
         });
     }
 

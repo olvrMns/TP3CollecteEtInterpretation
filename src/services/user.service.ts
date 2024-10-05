@@ -16,4 +16,8 @@ export class UserService {
         for (let elem = 0; elem < users.length; elem++) if (users[elem]?.[attributeName] + "" == value) return users[elem];
         return null;
     }
+
+    public static async addUser(user: User) {
+        return this.jsonUtils.addObject(user, FakeStore.USERS_DATA_PATH);
+    }
 }

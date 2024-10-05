@@ -1,7 +1,8 @@
-import { Router  } from "express";
+import { NextFunction, Request, Response, Router  } from "express";
+import { AuthController } from "../controllers/auth.controller";
 
 export const router: Router = Router();
 
-router.get("/");
-router.get("/login");
-router.get("/signup")
+//router.get("/*", AuthController.isAuthenticated);
+router.post("/login", AuthController.login);
+router.get("/signup", AuthController.signup)

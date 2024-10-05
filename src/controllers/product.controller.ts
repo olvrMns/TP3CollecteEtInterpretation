@@ -36,7 +36,7 @@ export class ProductController implements Controller {
         try {
             LOGGER.info(LogMessages.ADD_ONE_PRODUCT_REQUEST_RECEIVED);
             let product: Product = new ProductModel(
-                await ProductService.getUniqueId(),
+                await ProductService.jsonUtils.getUniqueId(await ProductService.getProducts()),
                 request.body.title,
                 request.body.price,
                 request.body.description,

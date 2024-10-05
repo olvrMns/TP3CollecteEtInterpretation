@@ -16,6 +16,7 @@ import { router as authRouter} from "./routes/auth.route";
  */
 export class App {
 
+    private static instance: App | null = null;
     private application: Application = Express();
     private server: Server | null = null;
     private version: string = "/v1";
@@ -23,9 +24,12 @@ export class App {
     private App() {}
 
     public static async getInstance(): Promise<App> {
-        Dotenv.config({path: "./.env"});
-        await FakeStore.setAllData();
-        return new App();
+        if (!this.instance) {
+            Dotenv.config({path: "./.env"});
+            await FakeStore.setAllData();
+            this.instance = new App();
+        }
+        return this.instance;
     }
 
     public setRoutes() {

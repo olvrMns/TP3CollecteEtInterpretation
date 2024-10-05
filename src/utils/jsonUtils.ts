@@ -29,4 +29,13 @@ export class JsonUtils<T extends Entity> {
         let objects: T[] = this.toArray(await FileUtils.readFile_(path));
         return await FileUtils.writeFile_(path, JSON.stringify(objects.filter(object_ => object_ != object)));
     }
+
+    public async getUniqueId(entities: T[]): Promise<number> {
+        let ids: number[] = [];
+        let nId: number = 1;
+        for (let elem: number = 0; elem < entities.length; elem++) ids.push(entities[elem].id);
+        while (ids.includes(nId)) nId++;
+        return nId;
+    }
+    
 }
