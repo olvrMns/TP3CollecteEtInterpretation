@@ -27,7 +27,8 @@ export class AuthService {
     }
 
     /**
-     * email: 'morrison@gmail.com', username: 'mor_2314', password: '83r5^_',
+     * email: 'morrison@gmail.com', username: 'mor_2314', password: '83r5^_'
+     * username: 'oli', password: '83wafawfawfawfwaf_'
      */
     public static async authenticateUser(usernameOrEmail: string, rawPassword: string): Promise<User | null> {
         let user: User | null = null;

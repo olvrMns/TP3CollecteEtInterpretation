@@ -1,5 +1,7 @@
 import Dotenv from "dotenv";
 import Express, { Application } from "express";
+import { readFileSync } from 'fs';
+import { Server as HTTPSServer, createServer } from "https";
 import { Server } from "http";
 import { FakeStore } from "./utils/fakeStore";
 import { LogMessages } from "./utils/log/logMessages";
@@ -17,7 +19,8 @@ import { router as authRouter} from "./routes/auth.route";
 export class App {
 
     public application: Application = Express();
-    private server: Server | null = null;
+    private httpServer: Server | null = null;
+    private httpsServer: HTTPSServer | null = null;
     private version: string = "/v1";
 
     private App() {}
@@ -35,11 +38,17 @@ export class App {
     }
 
     public start(): void {
-        this.server = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
+        this.httpsServer = this.httpsServer = createServer({
+            key: readFileSync("./cert/privateKey.pem"),
+            cert: readFileSync("./cert/publicKey.crt")
+        }, this.application);
+        this.httpsServer.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
+        //this.server = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
         this.setRoutes();
     }
 
     public close(): void {
-        this.server?.close();
+        this.httpServer?.close();
+        this.httpsServer?.close();
     }
 }
