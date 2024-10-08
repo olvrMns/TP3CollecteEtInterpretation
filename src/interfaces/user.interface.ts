@@ -2,8 +2,7 @@ import { Entity } from "./entity.interface"
 
 export enum Roles {
     EMPLOYEE,
-    ADMINISTRATOR,
-    VISITOR
+    ADMINISTRATOR
 }
 
 export interface Name {

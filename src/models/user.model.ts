@@ -12,7 +12,7 @@ export class UserModel implements User {
         public name: Name,
         public address: Address | null,
         public phone: string | null,
-        public role: Roles = Roles.VISITOR) {
+        public role: number = Roles.EMPLOYEE) {
     }
 
     public static getInstance(id: number, email: string, username: string, password: string, name: Name) {
