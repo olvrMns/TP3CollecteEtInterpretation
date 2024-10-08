@@ -1,5 +1,11 @@
 import { Entity } from "./entity.interface"
 
+export enum Roles {
+    EMPLOYEE,
+    ADMINISTRATOR,
+    VISITOR
+}
+
 export interface Name {
     firstName: string,
     lastName: string
@@ -28,6 +34,7 @@ export interface User extends Entity {
     password: string,
     name: Name,
     address: Address | null,
-    phone: string | null
+    phone: string | null,
+    role: Roles
 }
 

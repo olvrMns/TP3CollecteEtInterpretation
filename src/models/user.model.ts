@@ -1,4 +1,4 @@
-import { User } from "../interfaces/user.interface";
+import { Roles, User } from "../interfaces/user.interface";
 import { Address } from "../interfaces/user.interface";
 import { Name } from "../interfaces/user.interface";
 
@@ -11,7 +11,8 @@ export class UserModel implements User {
         public password: string,
         public name: Name,
         public address: Address | null,
-        public phone: string | null) {
+        public phone: string | null,
+        public role: Roles = Roles.VISITOR) {
     }
 
     public static getInstance(id: number, email: string, username: string, password: string, name: Name) {

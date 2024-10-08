@@ -13,11 +13,11 @@ export class AuthController {
             let authorizationString: string | undefined = request.headers.authorization;
             let token: string | null = null;
             if (authorizationString) token = authorizationString.split(' ')[1];
-            else throw new Error("Not logged in exception");
+            else throw new Error();
             if (token) await AuthService.verifyToken(token);
-            else throw new Error("Token exception");
+            else throw new Error();
             next();
-        } catch (error) { response.status(StatusCodes.UNAUTHORIZED).send(error); }
+        } catch (error: unknown) { response.status(StatusCodes.UNAUTHORIZED).send("NOT AUTHENTICATED"); }
     }
 
     public static async login(request: Request, response: Response): Promise<void> {
