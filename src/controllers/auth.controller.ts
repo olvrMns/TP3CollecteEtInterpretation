@@ -3,8 +3,10 @@ import { LOGGER } from "../utils/log/winstonLogger";
 import { StatusCodes } from "http-status-codes";
 import { AuthService } from "../services/auth.service";
 import { User } from "../interfaces/user.interface";
-import { UserModel } from "../models/user.model";
+import { UserInfo, UserModel } from "../models/user.model";
 import { UserService } from "../services/user.service";
+import { LogMessages } from "../utils/log/logMessages";
+import { JwtPayload } from "jsonwebtoken";
 
 export class AuthController {
 
@@ -12,24 +14,30 @@ export class AuthController {
         try {
             let authorizationString: string | undefined = request.headers.authorization;
             let token: string | null = null;
+            let payload: string | JwtPayload | undefined = undefined;
             if (authorizationString) token = authorizationString.split(' ')[1];
             else throw new Error();
-            if (token) await AuthService.verifyToken(token);
+            if (token) payload = await AuthService.verifyToken(token);
             else throw new Error();
+            console.log(Object.values(payload as object));
             next();
         } catch (error: unknown) { response.status(StatusCodes.UNAUTHORIZED).send("NOT AUTHENTICATED"); }
     }
 
     public static async login(request: Request, response: Response): Promise<void> {
         try {
+            LOGGER.alert(LogMessages.LOGIN_REQUEST_RECEIVED);
             let user: User | null = await AuthService.authenticateUser(request.body.username, request.body.password);
             if (user) response.status(StatusCodes.OK).send(await AuthService.createToken(user));
-            else throw new Error();
-        } catch (error) { response.status(StatusCodes.BAD_REQUEST).send(error); }
+            else throw new Error("ERRUR?");
+        } catch (error) {
+            response.status(StatusCodes.BAD_REQUEST); 
+        }
     }
 
     public static async signup(request: Request, response: Response) {
         try {
+            LOGGER.alert(LogMessages.SIGNUP_REQUEST_RECEIVED);
             let user: User = UserModel.getInstance(
                 await UserService.jsonUtils.getUniqueId(await UserService.getUsers()),
                 request.body.email,

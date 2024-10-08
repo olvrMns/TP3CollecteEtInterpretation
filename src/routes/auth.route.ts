@@ -7,5 +7,6 @@ export const LOGIN_ROUTE: string = "/login";
 export const SIGNUP_ROUTE: string = "/signup";
 
 router.use(RouteUtils.getConditionalRoute(AuthController.isAuthenticated, LOGIN_ROUTE, SIGNUP_ROUTE));
+
 router.post(LOGIN_ROUTE, AuthController.login);
 router.post(SIGNUP_ROUTE, AuthController.signup);

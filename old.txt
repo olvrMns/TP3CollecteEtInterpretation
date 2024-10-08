@@ -98,3 +98,14 @@ public static async getProductById(id: number): Promise<Product | null> {
         let objects: T[] = jsonUtils.toArray(await fetchResponse.json());
         for (let elem = 0; elem < objects.length; elem++) objects[elem]?.[att] = await e();
     }
+
+// ==========================================
+
+private async restCallback(request: Request, response: Response, minRole: number, message: string, operationCallback: () => Promise<void>): Promise<void> {
+        try {
+            if (request.user?.role as number >= minRole) {
+                LOGGER.info(message);
+                await operationCallback();
+            }
+        } catch (error) { response.status(StatusCodes.BAD_REQUEST); }
+    }

@@ -7,7 +7,7 @@ import { ProductService } from "../services/product.service";
 import { LOGGER } from "../utils/log/winstonLogger";
 import { LogMessages } from "../utils/log/logMessages";
 import { ProductModel } from "../models/product.model";
-
+import { User } from "../interfaces/user.interface";
 
 /**
  * @ref

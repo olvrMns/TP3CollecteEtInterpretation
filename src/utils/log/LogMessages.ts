@@ -22,5 +22,8 @@ export class LogMessages {
     public static get ADD_ONE_PRODUCT_REQUEST_RECEIVED(): string { return "Add one product request received..." }
     public static get GET_ALL_PRODUCT_REQUEST_RECEIVED(): string { return "Get all product request received..." }
 
+    public static get LOGIN_REQUEST_RECEIVED(): string { return "Login request received..." }
+    public static get SIGNUP_REQUEST_RECEIVED(): string { return "Signup request received..." }
+
     
 }

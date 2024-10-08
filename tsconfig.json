@@ -9,9 +9,10 @@
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "typeRoots": ["./types"]
   },
-  "include": ["./src/", "./public"],
+  "include": ["./src/", "./public", "./types"],
   "exclude": ["node_modules", "out"],
   "ts-node": {
     "esm": true
