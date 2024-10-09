@@ -1,9 +1,10 @@
 import { hash, compare, genSalt } from 'bcryptjs';
+import { Request } from 'express';
 import { UserService } from './user.service';
 import { User } from '../interfaces/user.interface';
 import { RegexUtils } from '../utils/regexUtils';
-import { JwtPayload, Secret, sign, verify, VerifyErrors } from 'jsonwebtoken';
-import { UserInfo } from '../models/user.model';
+import { JwtPayload, Secret, sign, verify, VerifyErrors, decode } from 'jsonwebtoken';
+import { UserInfo, UserModel } from '../models/user.model';
 
 /**
  * @ref
@@ -32,11 +33,11 @@ export class AuthService {
      */
     public static async authenticateUser(usernameOrEmail: string, rawPassword: string): Promise<User | null> {
         let user: User | null = null;
-        if (RegexUtils.testEmail(usernameOrEmail)) user = await UserService.getUser("email", usernameOrEmail);
+        if (RegexUtils.verify(usernameOrEmail, RegexUtils.RegexCode.EMAIL)) user = await UserService.getUser("email", usernameOrEmail);
         else user = await UserService.getUser("username", usernameOrEmail);
         if (user)  user = await this._comparePwd(rawPassword, user.password) ? user : null;      
         return user; 
-    }     
+    }
 
     public static createToken(user: User): Promise<string | null> {
         return new Promise((resolve, reject) => {
@@ -52,12 +53,12 @@ export class AuthService {
         });
     }
 
-    public static verifyToken(token: string): Promise<string | JwtPayload | undefined> {
+    public static verifyToken(token: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            verify(token, process.env.PK as Secret, (error: VerifyErrors | null, decoded: string | JwtPayload | undefined) => {
+            verify(token, process.env.PK as Secret, (error: VerifyErrors | null, token: any) => {
                 if (error) reject(error);
-                resolve(decoded);
-            })
+                resolve(token);
+            });
         });
     }
 

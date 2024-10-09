@@ -1,3 +1,4 @@
+import { FormatError } from "../errors/format.error";
 
 
 /**
@@ -24,8 +25,23 @@ export class RegexUtils {
         return new RegExp(code).test(value);
     }
 
-    public static testEmail(value: string): boolean {
-        return this.verify(value, this.RegexCode.EMAIL);
+    public static testEmail(value: string): string {
+        if (this.verify(value, this.RegexCode.EMAIL)) return value;
+        else throw FormatError.emailFormatError();
     }
 
+    public static testUsername(value: string): string {
+        if (this.verify(value, this.RegexCode.USERNAME)) return value;
+        else throw FormatError.usernameFormatError();
+    }
+
+    public static testPassword(value: string): string {
+        if (this.verify(value, this.RegexCode.PWD)) return value;
+        else throw FormatError.passwordFormatError();
+    }
+
+    public static testFirstLastName(value: string): string {
+        if (this.verify(value, this.RegexCode.FIRST_LAST_NAME)) return value;
+        else throw FormatError.firstLastNameFormatError();
+    }
 }
