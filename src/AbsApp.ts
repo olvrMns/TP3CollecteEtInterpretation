@@ -8,6 +8,8 @@ import { LogMessages } from "./utils/log/logMessages";
 import { LOGGER } from "./utils/log/winstonLogger";
 import { router as productRouter} from "./routes/product.route";
 import { router as authRouter} from "./routes/auth.route";
+import {  setup, serve } from 'swagger-ui-express';
+import { config } from "./swagger";
 
 /**
  * @ref
@@ -22,6 +24,7 @@ export class App {
     private httpServer: Server | null = null;
     private httpsServer: HTTPSServer | null = null;
     private version: string = "/v1";
+    private documentationEndPoint: string = "/doc";
 
     private App() {}
 
@@ -33,6 +36,7 @@ export class App {
 
     public setRoutes() {
         this.application.use(Express.json());
+        this.application.use(this.version + this.documentationEndPoint, serve, setup(config, { explorer: true}));
         this.application.use(this.version, authRouter);
         this.application.use(this.version, productRouter);
     }
