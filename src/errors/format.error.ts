@@ -18,6 +18,10 @@ export class FormatError extends APIError {
         return new this("Password must have atleast one number, one lower/upper case letter, one special character and must be made of atleast 8 charactes");
     }
 
+    public static positiveNumberError(attributeName: string) {
+        return new this("[" + attributeName +  "]" + " must be positive!");
+    }
+
     public static strLimitError(limit: number) {
         return new this("[] Must be less then " + (limit + 1));
     }

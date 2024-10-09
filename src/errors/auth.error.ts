@@ -7,7 +7,7 @@ export class AuthError extends APIError {
     }
 
     public static notAuthenticatedError(): AuthError {
-        return new this("Not authenticad!");
+        return new this("Not authenticated!");
     }
 
     public static credentialsError(): AuthError {

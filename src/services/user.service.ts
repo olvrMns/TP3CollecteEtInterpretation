@@ -46,7 +46,7 @@ export class UserService {
             RegexUtils.testEmail(request.body.email),
             RegexUtils.testUsername(request.body.username),
             await AuthService._hashPwd(RegexUtils.testPassword(request.body.password)),
-            { firstName: RegexUtils.testFirstLastName(request.body.firstName), lastName: RegexUtils.testFirstLastName(request.body.lastName) }
+            { firstName: RegexUtils.testFirstLastName(request.body.name.firstName), lastName: RegexUtils.testFirstLastName(request.body.name.lastName) }
         );
         return user;
     }

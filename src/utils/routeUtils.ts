@@ -21,8 +21,8 @@ export class RouteUtils {
 
     public static getAuthorizedRoute(expressCallback: ExpressCallback, ...roles: Roles[]): (request: Request, response: Response) => Promise<void> {
         return (request: Request, response: Response) => {
-            if (Object.keys(roles).includes(request.user?.role.toString() as string)) return expressCallback(request, response);
-            else throw AuthError.notAuthenticatedError();
+            if (roles.length == 0 || roles.includes(request.user?.role as Roles)) return expressCallback(request, response); 
+            else throw AuthError.notAuthorizedError();
         }
     }
 

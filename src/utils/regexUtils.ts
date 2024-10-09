@@ -18,7 +18,8 @@ export class RegexUtils {
         PHONE_NUMBER: /^\d{3}-\d{3}-\d{4}$/g,
         LIMIT80: /^.{0,80}$/g,
         LIMIT5000: /^.{0,5000}$/g,
-        LIMIT50: /^.{0,50}/g
+        LIMIT50: /^.{0,50}/g,
+        POSITIVE_DECIMAL: /^\d+(\.?\d+){1}$/g
     }
 
     public static verify(value: string, code: RegExp): boolean {
@@ -43,5 +44,10 @@ export class RegexUtils {
     public static testFirstLastName(value: string): string {
         if (this.verify(value, this.RegexCode.FIRST_LAST_NAME)) return value;
         else throw FormatError.firstLastNameFormatError();
+    }
+
+    public static testPositiveDecimal(value: string, attributeName: string): string {
+        if (this.verify(value, this.RegexCode.POSITIVE_DECIMAL)) return value;
+        else throw FormatError.positiveNumberError(attributeName);
     }
 }
