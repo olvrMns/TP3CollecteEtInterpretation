@@ -2,3 +2,8 @@
 
 ### npm run dev
 - log files will create themselves
+
+### LEFT TO DO
+- **PRODUCT ROUTES REGEX VALIDATION**
+- **SWAGGER DOC**
+- **INSTRUCTIONS README**
