@@ -1,4 +1,4 @@
-import { APIError } from "./abs.error";
+import { APIError } from "./api.error";
 
 export class FormatError extends APIError {
 
@@ -22,8 +22,8 @@ export class FormatError extends APIError {
         return new this("[" + attributeName +  "]" + " must be positive!");
     }
 
-    public static strLimitError(limit: number) {
-        return new this("[] Must be less then " + (limit + 1));
+    public static strLimitError(attributeName: string, limit: number) {
+        return new this(`[${attributeName}] must be less than ${limit + 1} characters!`);
     }
 
 }

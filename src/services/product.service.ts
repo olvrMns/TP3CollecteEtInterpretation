@@ -1,7 +1,10 @@
+import { Request } from "express";
 import { Product } from "../interfaces/product.interface";
-import { JsonUtils } from "../utils/jsonUtils";
+import { ProductModel } from "../models/product.model";
 import { FakeStore } from "../utils/fakeStore";
 import { FileUtils } from "../utils/fileUtils";
+import { JsonUtils } from "../utils/jsonUtils";
+import { RegexUtils } from "../utils/regexUtils";
 
 export class ProductService {
 
@@ -38,6 +41,23 @@ export class ProductService {
 
     public static async addProduct(product: Product): Promise<boolean> {
         return await this.jsonUtils.addObject(product, FakeStore.PRODUCTS_DATA_PATH);
+    }
+
+    public static async getValidProduct(request: Request): Promise<Product> {
+        let nProduct: Product = new ProductModel(
+            await ProductService.jsonUtils.getUniqueId(await ProductService.getProducts()),
+                RegexUtils.testStrLimit(request.body.title, "title"),
+                parseFloat(RegexUtils.testPositiveDecimal(request.body.price, "price")),
+                RegexUtils.testStrLimit(request.body.description, "description", 5000),
+                request.body.image,
+                request.body.category,
+                request.body.stock,
+                {
+                    rate: parseFloat(RegexUtils.testPositiveDecimal(request.body.rating.rate, "rate")), 
+                    count: parseInt(RegexUtils.testPositiveDecimal(request.body.rating.count, "count"))
+                }
+        );
+        return nProduct;
     }
 
     public static async removeProduct(product: Product) {

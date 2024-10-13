@@ -16,9 +16,6 @@ export class RegexUtils {
         URL: /(https?:\/\/)?(www\.)?(?=[a-zA-Z0-9]{1,256}\.)[a-zA-Z0-9]+(\.[a-z]{2,5}){1,3}(\/[a-zA-Z0-9-\._~:\/?#\[\]@!$&'\(\)\*\\+,;=]*)?/g,
         EMAIL: /^(?=.{1,64}@)[a-zA-Z0-9_-]+(\.[a-zA-Z0-9]+)*@[a-z]+(\.[a-zA-Z]+)+[a-zA-Z]$/g,
         PHONE_NUMBER: /^\d{3}-\d{3}-\d{4}$/g,
-        LIMIT80: /^.{0,80}$/g,
-        LIMIT5000: /^.{0,5000}$/g,
-        LIMIT50: /^.{0,50}/g,
         POSITIVE_DECIMAL: /^\d+(\.?\d+){1}$/g
     }
 
@@ -49,5 +46,10 @@ export class RegexUtils {
     public static testPositiveDecimal(value: string, attributeName: string): string {
         if (this.verify(value, this.RegexCode.POSITIVE_DECIMAL)) return value;
         else throw FormatError.positiveNumberError(attributeName);
+    }
+
+    public static testStrLimit(value: string, attributeName: string, limit: number = 50): string {
+        if (this.verify(value, new RegExp(`^.{1,${limit}}$`, "g"))) return value;
+        else throw FormatError.strLimitError(attributeName, limit);
     }
 }

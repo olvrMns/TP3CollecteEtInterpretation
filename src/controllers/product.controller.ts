@@ -6,8 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 import { ProductService } from "../services/product.service";
 import { LOGGER } from "../utils/log/winstonLogger";
 import { LogMessages } from "../utils/log/logMessages";
-import { ProductModel } from "../models/product.model";
-import { User } from "../interfaces/user.interface";
+import { APIError } from "../errors/api.error";
 
 /**
  * @ref
@@ -21,7 +20,7 @@ export class ProductController implements Controller {
             LOGGER.info(LogMessages.GET_ONE_PRODUCT_REQUEST_RECEIVED);
             let product: Product | null = await ProductService.getProduct(request.params.attribute, request.params.value);
             response.status(StatusCodes.OK).send(product);
-        } catch (error) { response.status(StatusCodes.BAD_REQUEST); }
+        } catch (error) { response.sendStatus(StatusCodes.BAD_REQUEST); }
     }
 
     public async getAll(request: Request, response: Response): Promise<void> {
@@ -29,25 +28,19 @@ export class ProductController implements Controller {
             LOGGER.info(LogMessages.GET_ALL_PRODUCT_REQUEST_RECEIVED);
             let products: Product[] = await ProductService.getProducts();
             response.status(StatusCodes.OK).send(products);
-        } catch (error) { response.status(StatusCodes.BAD_REQUEST); }
+        } catch (error) { response.sendStatus(StatusCodes.BAD_REQUEST); }
     }
 
     public async addOne(request: Request, response: Response): Promise<void> {
         try {
             LOGGER.info(LogMessages.ADD_ONE_PRODUCT_REQUEST_RECEIVED);
-            let product: Product = new ProductModel(
-                await ProductService.jsonUtils.getUniqueId(await ProductService.getProducts()),
-                request.body.title,
-                request.body.price,
-                request.body.description,
-                request.body.image,
-                request.body.category,
-                request.body.stock,
-                request.body.rating
-            );
+            let product: Product = await ProductService.getValidProduct(request);
             await ProductService.addProduct(product);
             response.status(StatusCodes.CREATED).send(product);
-        } catch (error) { response.status(StatusCodes.BAD_REQUEST); }
+        } catch (error) { 
+            if (error instanceof APIError) response.status(StatusCodes.BAD_GATEWAY).send(error.message);
+            response.sendStatus(StatusCodes.BAD_REQUEST); 
+        }
     }
 
     public async removeOne(request: Request, response: Response): Promise<void> {

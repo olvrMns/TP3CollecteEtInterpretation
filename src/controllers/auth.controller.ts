@@ -1,17 +1,14 @@
 import { NextFunction, Request, Response } from "express";
-import { LOGGER } from "../utils/log/winstonLogger";
 import { StatusCodes } from "http-status-codes";
-import { AuthService } from "../services/auth.service";
+import { APIError } from "../errors/api.error";
+import { AuthError } from "../errors/auth.error";
+import { CrudError } from "../errors/crud.error";
 import { User } from "../interfaces/user.interface";
-import { UserInfo, UserModel } from "../models/user.model";
+import { AuthService } from "../services/auth.service";
 import { UserService } from "../services/user.service";
 import { LogMessages } from "../utils/log/logMessages";
-import { AuthError } from "../errors/auth.error";
+import { LOGGER } from "../utils/log/winstonLogger";
 import { RouteUtils } from "../utils/routeUtils";
-import { RegexUtils } from "../utils/regexUtils";
-import { FormatError } from "../errors/format.error";
-import { CrudError } from "../errors/crud.error";
-import { APIError } from "../errors/abs.error";
 
 export class AuthController {
 

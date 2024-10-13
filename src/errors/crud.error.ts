@@ -1,4 +1,4 @@
-import { APIError } from "./abs.error";
+import { APIError } from "./api.error";
 
 export class CrudError extends APIError {
 

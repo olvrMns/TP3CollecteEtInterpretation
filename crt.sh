@@ -15,7 +15,8 @@ cr() {
     echo "== SIGNING REQUEST ==";
     openssl req -new -key $privateKeyPath -out $certificateSigningRequest;
     echo "== PUBLIC KEY ==";
-    openssl x509 -req -days 365 -in $certificateSigningRequest -signkey $privateKey -out $crt;
+    #there's an issue with (openssl x509 -req -days 365 -in $certificateSigningRequest -signkey $privateKey -out $crt)
+    openssl x509 -req -days 365 -in ./cert/certificateSigningRequest.csr -signkey ./cert/privateKey.pem -out ./cert/publicKey.crt;
 }
  
 $*
