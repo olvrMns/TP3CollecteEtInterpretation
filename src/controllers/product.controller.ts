@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 //import { ParamsDictionary } from 'express-serve-static-core';
+import { StatusCodes } from 'http-status-codes';
+import { APIError } from "../errors/api.error";
 import { Controller } from "../interfaces/controller.interface";
 import { Product } from "../interfaces/product.interface";
-import { StatusCodes } from 'http-status-codes';
 import { ProductService } from "../services/product.service";
-import { LOGGER } from "../utils/log/winstonLogger";
 import { LogMessages } from "../utils/log/logMessages";
-import { APIError } from "../errors/api.error";
+import { LOGGER } from "../utils/log/winstonLogger";
 
 /**
  * @ref
@@ -49,7 +49,10 @@ export class ProductController implements Controller {
             let product: Product | null = await ProductService.getProduct(request.params.attribute, request.params.value);
             await ProductService.removeProduct(product as Product);
             response.sendStatus(StatusCodes.OK);
-        } catch (error) { response.sendStatus(StatusCodes.BAD_REQUEST); }
+        } catch (error) { 
+            if (error instanceof APIError) response.status(StatusCodes.BAD_REQUEST).send(error.message);
+            response.sendStatus(StatusCodes.BAD_REQUEST); 
+        }
     }
 
     public async getAllByPrice(request: Request, response: Response): Promise<void> {

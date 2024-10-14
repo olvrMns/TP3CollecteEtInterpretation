@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { APIError } from "../errors/api.error";
 import { Product } from "../interfaces/product.interface";
 import { ProductModel } from "../models/product.model";
 import { FakeStore } from "../utils/fakeStore";
@@ -36,7 +37,7 @@ export class ProductService {
         let products: Product[] = await this.getProducts();
         for (let elem: number = 0; elem < products.length; elem++) 
             if (products[elem]?.[attributeName] + "" == value) return products[elem] 
-        return null;
+        throw APIError.entityNotFound();
     }
 
     public static async addProduct(product: Product): Promise<boolean> {

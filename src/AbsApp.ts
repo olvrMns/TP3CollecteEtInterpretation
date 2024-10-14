@@ -29,7 +29,7 @@ export class App {
     private App() {}
 
     public static async getInstance(): Promise<App> {
-        Dotenv.config({path: "./.env"});
+        Dotenv.config({path: "./.TEMP.env"});
         await FakeStore.setAllData();
         return new App();
     }

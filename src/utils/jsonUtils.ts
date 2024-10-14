@@ -27,7 +27,7 @@ export class JsonUtils<T extends Entity> {
 
     public async removeObject(object: T, path: string): Promise<boolean> {
         let objects: T[] = this.toArray(await FileUtils.readFile_(path));
-        return await FileUtils.writeFile_(path, JSON.stringify(objects.filter(object_ => object_ != object)));
+        return await FileUtils.writeFile_(path, JSON.stringify(objects.filter(object_ => object_.id != object.id)));
     }
 
     public async getUniqueId(entities: T[]): Promise<number> {

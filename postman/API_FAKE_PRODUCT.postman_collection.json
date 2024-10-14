@@ -239,15 +239,24 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im1vcnJpc29uQGdtYWlsLmNvbSIsIm5hbWUiOnsiZmlyc3RuYW1lIjoiZGF2aWQiLCJsYXN0bmFtZSI6Im1vcnJpc29uIn0sInVzZXJuYW1lIjoibW9yXzIzMTQifSwiaWF0IjoxNzI4ODU4MDk0LCJleHAiOjE3Mjg4NTg2OTR9.8wkpM6BdvILXLl5lxSJ2TVIWRDkLOfyICpCsTjEVh9k",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im9saUB3YWVzaC5jb20iLCJuYW1lIjp7ImZpcnN0TmFtZSI6Im9saSIsImxhc3ROYW1lIjoib2xpIn0sInVzZXJuYW1lIjoib2xpIn0sImlhdCI6MTcyODg2NDU2NywiZXhwIjoxNzI4ODY1MTY3fQ.aY2n8cyJLouz2n7fCr7fhEvuK1a73FMRLm0687JGHZo",
 							"type": "string"
 						}
 					]
 				},
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "https://localhost:5555/v1/remove/att=title&v=salut",
+					"raw": "https://localhost:5555/v1/product/remove/att=title&v=salut",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -255,7 +264,39 @@
 					"port": "5555",
 					"path": [
 						"v1",
+						"product",
 						"remove",
+						"att=title&v=salut"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_ONE_PRODUCT",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im1vcnJpc29uQGdtYWlsLmNvbSIsIm5hbWUiOnsiZmlyc3RuYW1lIjoiZGF2aWQiLCJsYXN0bmFtZSI6Im1vcnJpc29uIn0sInVzZXJuYW1lIjoibW9yXzIzMTQifSwiaWF0IjoxNzI4ODYzMDY2LCJleHAiOjE3Mjg4NjM2NjZ9.CdZLauevhtttsC9-ZOyaJbLNCz4_pbUnAHkQ-K3ftlI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5555/v1/product/att=title&v=salut",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v1",
+						"product",
 						"att=title&v=salut"
 					]
 				}

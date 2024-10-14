@@ -22,5 +22,5 @@ router.get(PRODUCT_ENDPOINT_PREFIX + "/att=:attribute&v=:value",
 router.post(PRODUCT_ENDPOINT_PREFIX + "/save", 
     RouteUtils.getAuthorizedRoute(productController.addOne, Roles.ADMINISTRATOR));
 
-router.patch(PRODUCT_ENDPOINT_PREFIX + "/remove/att=:attribute&v=:value", 
+router.post(PRODUCT_ENDPOINT_PREFIX + "/remove/att=:attribute&v=:value", 
     RouteUtils.getAuthorizedRoute(productController.removeOne, Roles.ADMINISTRATOR));
