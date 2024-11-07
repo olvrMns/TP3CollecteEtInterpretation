@@ -2,10 +2,13 @@
 - **Based on:** [TP1](https://github.com/olvrMns/TP1CollecteEtInterpretation)
 
 ## NOTES
+- MongoDB
 - Seperate testing server
     - Supertest
     - Security test
     - Autonomous testing (npm test)
+    - SQL Injection 
+    - Artillery
 - Allow all IPs on Atlas
 - Keep v1, use v2 (new Routes)
 
@@ -13,3 +16,4 @@
 - [JestCoverage](https://github.com/marketplace/actions/jest-coverage-report)
 - [Jest](https://jestjs.io/docs/getting-started)
 - [Action](https://docs.github.com/en/actions/writing-workflows/quickstart)
+- [Artillery](https://www.artillery.io/)
