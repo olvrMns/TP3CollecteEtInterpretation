@@ -3,7 +3,7 @@
 
 ## NOTES
 - MongoDB
-- Seperate testing server
+- [Seperate testing env](https://stackoverflow.com/questions/64225631/how-can-i-add-production-development-and-test-environment-in-node-js)
     - Supertest
     - Security test
     - Autonomous testing (npm test)
