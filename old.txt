@@ -1,0 +1,142 @@
+import { closeSync, existsSync, mkdirSync, openSync, writeFile, rm, PathLike, rmSync, readFile } from "fs";
+import { LOGGER } from "./log/winstonLogger";
+
+/**
+ * @ref
+ * - https://stackoverflow.com/questions/17699599/node-js-check-if-file-exists
+ */
+export class FileUtils {
+
+    public static async exists_(path: string): Promise<boolean> {
+        return true;
+    }
+
+    public static async createDirectory_(path: string): Promise<boolean> {
+        if (!existsSync(path)) mkdirSync(path);
+        return true;
+    }
+
+    public static async createFile_(path: string): Promise<boolean> {
+        if (!existsSync(path)) closeSync(openSync(path, "w"));
+        return true;
+    }   
+
+    public static removeFile_(path: string): void {
+        //callback todo
+        rmSync(path);
+    }
+
+    public static writeFile_(path: string, content: string, successMessage: string, errorMessage: string): void {
+        // this.createFile(path);
+        // writeFile(path, content, (error: NodeJS.ErrnoException | null): void => {
+        //     if (error) LOGGER.error(errorMessage);
+        //     else LOGGER.info(successMessage);
+        // });
+    }
+
+    public static readFile_(path: string): string {
+        // let content: string = "";
+        // readFile(path, (error, data: Buffer) => {
+        //     content = data;
+        // })
+    }
+}
+
+=========================================================================================
+========================================================================================
+
+public async _getOne(attribute: string): Promise<(request: Request, response: Response) => Promise<void>> {
+        return async (request: Request, response: Response): Promise<void> => {
+            try {
+                LOGGER.info(LogMessages.GET_ONE_PRODUCT_REQUEST_RECEIVED);
+                let product: Product | null = await ProductService.getProduct(attribute, request.params.v);
+                LOGGER.info("ANGWOANGOAW")
+                response.status(StatusCodes.OK).send(product);
+            } catch (error) { response.status(StatusCodes.BAD_REQUEST); }
+        }
+    }
+
+public static async getProduct(attribute: string, value: any): Promise<Product | null> {
+        let products: Product[] = await this.getProducts();
+        for (let elem: number = 0; elem < products.length; elem++) 
+            if (products[elem]?.[attribute].ToString() == value) return products[elem];
+        return null;
+}
+
+async function setAttributeRoute(router: Router, attribute: string, endpoint: string): Promise<void> {
+    await productController._getOne(attribute).then(res => {
+        
+        router.get(endpoint, res);
+    })
+}
+
+/=====================================
+
+public static async getProductById(id: number): Promise<Product | null> {
+        let products: Product[] = await this.getProducts();
+        for (let elem: number = 0; elem < products.length; elem++) if (products[elem].id == id) return products[elem];
+        return null;
+    }
+
+    public static async getProductByTitle(title: string): Promise<Product | null> {
+        let products: Product[] = await this.getProducts();
+        for (let elem: number = 0; elem < products.length; elem++) if (products[elem].title == title) return products[elem];
+        return null;
+    }
+
+    private static async setData(endpoint: string, filePath: string): Promise<void> {
+        let fetchResponse: any = (await fetch(endpoint));
+        FileUtils.writeFile_(
+            filePath, 
+            await fetchResponse.json()
+        );
+    }
+
+    private static async setData<T extends Entity, R>(dataEndpoint: string, e: (object: any, index: number) => Promise<R>, dataPath: string, att: string) {
+        let fetchResponse: any = await fetch(dataEndpoint);
+        let jsonUtils: JsonUtils<T> = new JsonUtils<T>();
+        let objects: T[] = jsonUtils.toArray(await fetchResponse.json());
+        for (let elem = 0; elem < objects.length; elem++) objects[elem]?.[att] = await e();
+    }
+
+// ==========================================
+
+private async restCallback(request: Request, response: Response, minRole: number, message: string, operationCallback: () => Promise<void>): Promise<void> {
+        try {
+            if (request.user?.role as number >= minRole) {
+                LOGGER.info(message);
+                await operationCallback();
+            }
+        } catch (error) { response.status(StatusCodes.BAD_REQUEST); }
+    }
+
+// =============================================
+
+/**
+ * @ref 
+ * - https://stackoverflow.com/questions/32647215/declaring-static-constants-in-es6-classes
+ * - https://stackoverflow.com/questions/42884751/whats-the-meaning-of-static-get-in-javascript-es6
+ * - https://stackoverflow.com/questions/32647215/declaring-static-constants-in-es6-classes
+ */
+export class LogMessages {
+
+    public static get SERVER_START(): string { return "Server started successfully..." }
+
+    public static get FAKE_STORE_DATA_FILE_ERROR(): string { return "Something went wrong while writing the fake data..." }
+    public static get FAKE_STORE_DATA_FILE_SUCCESS(): string { return "Fake data writing operation was successfull..." }
+
+    public static get DATA_ADDED_SUCCESSFULLY(): string { return "Object was successfully added to the file..." }
+    public static get DATA_ADDED_ERROR(): string { return "Something went wrong while trying to add the object..." }
+
+    public static get IO_OPERATION_SUCCESSFULL(): string { return "I/O operation was successfull..." }
+
+    public static get GET_ONE_PRODUCT_REQUEST_RECEIVED(): string { return "Get one product request received..." }
+    public static get REMOVE_ONE_PRODUCT_REQUEST_RECEIVED(): string { return "Delete one product request received..." }
+    public static get ADD_ONE_PRODUCT_REQUEST_RECEIVED(): string { return "Add one product request received..." }
+    public static get GET_ALL_PRODUCT_REQUEST_RECEIVED(): string { return "Get all product request received..." }
+
+    public static get LOGIN_REQUEST_RECEIVED(): string { return "Login request received..." }
+    public static get SIGNUP_REQUEST_RECEIVED(): string { return "Signup request received..." }
+
+    
+}
