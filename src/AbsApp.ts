@@ -1,15 +1,17 @@
 import Dotenv from "dotenv";
+Dotenv.config({path: "./.TEMP.env"});
 import Express, { Application } from "express";
 import { readFileSync } from 'fs';
-import { Server as HTTPSServer, createServer } from "https";
 import { Server } from "http";
+import { Server as HTTPSServer, createServer } from "https";
+import { serve, setup } from 'swagger-ui-express';
+import { router as authRouter } from "./routes/auth.route";
+import { router as productRouter } from "./routes/product.route";
+import { config } from "./swagger";
 import { FakeStore } from "./utils/fakeStore";
 import { LogMessages } from "./utils/log/logMessages";
 import { LOGGER } from "./utils/log/winstonLogger";
-import { router as productRouter} from "./routes/product.route";
-import { router as authRouter} from "./routes/auth.route";
-import {  setup, serve } from 'swagger-ui-express';
-import { config } from "./swagger";
+import { MongoDBInquisitor, setMongoDBCluster } from "./utils/MongoDB";
 
 /**
  * @ref
@@ -26,11 +28,11 @@ export class App {
     private version: string = "/v1";
     private documentationEndPoint: string = "/doc";
 
-    private App() {}
+    private constructor() {}
 
     public static async getInstance(): Promise<App> {
-        Dotenv.config({path: "./.TEMP.env"});
         await FakeStore.setAllData();
+        await setMongoDBCluster(String(process.env.MONGODB_URL_DEV), String(process.env.MONGODB_URL_PROD));
         return new App();
     }
 
@@ -46,7 +48,7 @@ export class App {
             key: readFileSync("./cert/privateKey.pem"),
             cert: readFileSync("./cert/publicKey.crt")
         }, this.application);
-        this.httpsServer.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
+        this.httpsServer.listen(process.env.DEV_PORT, () => LOGGER.info(LogMessages.SERVER_START));
         //this.server = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
         this.setRoutes();
     }
