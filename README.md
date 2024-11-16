@@ -18,3 +18,4 @@
 - [Action](https://docs.github.com/en/actions/writing-workflows/quickstart)
 - [Artillery](https://www.artillery.io/)
 - [Create](https://stackoverflow.com/questions/31126045/is-it-possible-to-create-a-new-database-in-mongodb-with-mongoose)
+- [Collections](https://stackoverflow.com/questions/13444876/node-js-mongoose-check-if-a-collection-exists)

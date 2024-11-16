@@ -1,4 +1,5 @@
 import { createLogger, Logger, format, config, transports, Logform } from "winston";
+import { SyslogConfigSetLevels } from "winston/lib/winston/config";
 
 
 const LOG_DIRECTORY_PATH: string = "./LOGS/";
@@ -19,11 +20,27 @@ const getTransportsFile = (level: string): transports.FileTransportInstance => {
     })
 }
 
+interface CustomLevels extends SyslogConfigSetLevels{
+    infoMDB: number;
+}
+
+const CustomLevelsObj: CustomLevels = {
+    notice: 1,
+    info: 2,
+    infoMDB: 3,
+    debug: 4,
+    alert: 5,
+    warning: 6,
+    error: 7,
+    emerg: 8,
+    crit: 9,
+}
+
 /**
  * @ref https://betterstack.com/community/guides/logging/how-to-install-setup-and-use-winston-and-morgan-to-log-node-js-applications/
  */
 export const LOGGER: Logger = createLogger({
-    levels: config.syslog.levels,
+    levels: CustomLevelsObj,
     level: "debug",
     format: format.combine(format.timestamp(), format.json()),
     transports: [
@@ -36,6 +53,7 @@ export const LOGGER: Logger = createLogger({
         getTransportsFile("emerg"),
         getTransportsFile("notice"),
         getTransportsFile("warning"),
+        getTransportsFile("infoMDB"),
     ]
 });
 

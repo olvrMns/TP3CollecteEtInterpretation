@@ -11,7 +11,7 @@ import { config } from "./swagger";
 import { FakeStore } from "./utils/fakeStore";
 import { LogMessages } from "./utils/log/logMessages";
 import { LOGGER } from "./utils/log/winstonLogger";
-import { MongoDBInquisitor, setMongoDBCluster } from "./utils/MongoDB";
+import { setMongoDBCluster } from "./utils/MongoDB";
 
 /**
  * @ref
@@ -32,7 +32,7 @@ export class App {
 
     public static async getInstance(): Promise<App> {
         await FakeStore.setAllData();
-        await setMongoDBCluster(String(process.env.MONGODB_URL_DEV), String(process.env.MONGODB_URL_PROD));
+        await setMongoDBCluster(String(process.env.MONGODB_URL_PROD), String(process.env.MONGODB_URL_DEV));
         return new App();
     }
 
