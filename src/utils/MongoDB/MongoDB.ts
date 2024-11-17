@@ -9,6 +9,7 @@ import { User } from '../../interfaces/user.interface';
 import { ProductService } from '../../services/product.service';
 import { UserService } from '../../services/user.service';
 import { LOGGER } from '../log/winstonLogger';
+import { Schemas, SchemasName } from './schemas';
 
 export interface CollectionExistsResponse {
     exists: boolean;
@@ -114,7 +115,7 @@ export const setMongoDBCluster = async (...environments_url: string[]): Promise<
     let products: Product[] = await ProductService.getProducts();
     let users: User[] = await UserService.getUsers();
     for (let elem = 0; elem < environments_url.length; elem++) {
-        await createAndInsert(environments_url[elem], [{collectionName: "users", schema: userSchema, objects: users}]);
-        await createAndInsert(environments_url[elem], [{collectionName: "products", schema: productSchema, objects: products}]);
+        await createAndInsert(environments_url[elem], [{collectionName: "users", schema: Schemas[SchemasName.USER], objects: users}]);
+        await createAndInsert(environments_url[elem], [{collectionName: "products", schema: Schemas[SchemasName.PRODUCT], objects: products}]);
     }
 }

@@ -11,7 +11,7 @@ import { config } from "./swagger";
 import { FakeStore } from "./utils/fakeStore";
 import { LogMessages } from "./utils/log/logMessages";
 import { LOGGER } from "./utils/log/winstonLogger";
-import { setMongoDBCluster } from "./utils/MongoDB/MongoDB";
+import { setMongoDBCluster } from "./utils/mongoDB/mongoDB";
 
 /**
  * @ref
