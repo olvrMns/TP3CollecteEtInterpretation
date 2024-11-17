@@ -6,18 +6,40 @@ import { FakeStore } from "../utils/fakeStore";
 import { FileUtils } from "../utils/fileUtils";
 import { JsonUtils } from "../utils/jsonUtils";
 import { RegexUtils } from "../utils/regexUtils";
+import { ModelData, SchemaID, Schemas } from "../utils/mongoDB/schemas";
+import { MongoDBInquisitor } from "../utils/mongoDB/mongoDB";
+import { PipelineID, pipelines } from "../utils/mongoDB/pipelines";
 
 export class ProductService {
 
     public static jsonUtils: JsonUtils<Product> = new JsonUtils<Product>();
+    private static modelData: ModelData = Schemas[SchemaID.PRODUCT];
+    private static instance: MongoDBInquisitor = MongoDBInquisitor.init(String(process.env.MONGODB_URL_DEV));
+
+    private static mapQueryResult(queryResult: any): Product[] {
+        let products: Product[] = [];
+        queryResult.map(object => {
+            object = object.toObject();
+            products.push({
+                id: object.id,
+                title: object.title,
+                price: object.price,
+                description: object.description,
+                category: object.category,
+                image: object.image,
+                stock: object.stock,
+                rating: object.rating
+            });
+        }); 
+        return products;
+    }
     
     public static async getProducts(): Promise<Product[]> {
-        return this.jsonUtils.toArray(await FileUtils.readFile_(FakeStore.PRODUCTS_DATA_PATH));
+        return this.mapQueryResult(await this.instance.getAllDocuments(this.modelData));
     }
 
     public static async getProductsByCategory(category: string): Promise<Product[]> {
-        let products: Product[] = await this.getProducts();
-        return products.filter(product => product.category == category);
+        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, PipelineID.PRODUCTS_BY_CATEGORY));
     }
     
     public static async getProductsByPrice(min: number, max: number): Promise<Product[]> {

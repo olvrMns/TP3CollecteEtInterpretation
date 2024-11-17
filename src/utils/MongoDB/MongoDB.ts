@@ -2,6 +2,7 @@ import {
     Collection,
     connect,
     Mongoose,
+    PipelineStage,
     Schema
 } from 'mongoose';
 import { Product } from '../../interfaces/product.interface';
@@ -9,7 +10,8 @@ import { User } from '../../interfaces/user.interface';
 import { ProductService } from '../../services/product.service';
 import { UserService } from '../../services/user.service';
 import { LOGGER } from '../log/winstonLogger';
-import { Schemas, SchemasName } from './schemas';
+import { Schemas, SchemaID, ModelData } from './schemas';
+import { PipelineID, pipelines } from './pipelines';
 
 export interface CollectionExistsResponse {
     exists: boolean;
@@ -58,35 +60,49 @@ export class MongoDBInquisitor {
         }
     }
 
-    public async createCollection(collectionName: string, schema: Schema): Promise<void> {
+    public async createCollection(modelData: ModelData): Promise<void> {
         await this.execute(async () => {
-            let model: any = this.mongooseInstance?.model(collectionName, schema);
-            await model.createCollection();
+            let Model = this.mongooseInstance?.model(modelData.collectionName, modelData.schema);
+            await Model?.createCollection();
         });
     }
 
     public async collectionExists(collectionName: string): Promise<boolean> {
-        LOGGER.log('infoMDB', `Check exists for ${this.dbName}:${collectionName} ...`);
         let res: boolean = false;
         await this.execute(async () => {
             let collections: any = await this.mongooseInstance?.connection.db.listCollections().toArray();
             for (let elem = 0; elem < collections.length; elem++) if (collections[elem].name == collectionName) res = true;
+            LOGGER.log('infoMDB', `Check exists for ${this.dbName}:${collectionName} ...`);
         });
         return res;
     }
 
-    public async getCollectionCount(collectionName: string, schema: Schema): Promise<number | undefined> {
+    public async getCollectionCount(modelData: ModelData): Promise<number | undefined> {
         let res: number | undefined = 0;
         await this.execute(async () => {
-            let Model = this.mongooseInstance?.connection.model(collectionName, schema);
+            let Model = this.mongooseInstance?.connection.model(modelData.collectionName, modelData.schema);
             res = await Model?.countDocuments();
         });
         return res;
     }
 
-    // public async getAggregation(pipeline: any) {
+    public async getAllDocuments(modelData: ModelData): Promise<any> {
+        let res: any;
+        await this.execute(async () => {
+            let Model = this.mongooseInstance?.connection.model(modelData.collectionName, modelData.schema);
+            res = await Model?.find();
+        });
+        return res;
+    }
 
-    // }
+    public async getAggregation(modelData: ModelData, pipelineID: PipelineID): Promise<any> {
+        let res: any;
+        await this.execute(async () => {
+            let Model = this.mongooseInstance?.connection.model(modelData.collectionName, modelData.schema);
+            res = await Model?.aggregate(pipelines[pipelineID]);
+        });
+        return res;
+    }
 
     public async insertAny(collectionName: string, objects: any[]): Promise<void> {
         await this.execute(async () => {
@@ -98,22 +114,20 @@ export class MongoDBInquisitor {
 
 }
 
-const createAndInsert = async (environment_url: string, params: { collectionName: string, schema: Schema, objects: any[] }[]): Promise<void> => {
+const createAndInsert = async (environment_url: string, params: { schemaID: SchemaID, objects: any[] }[]): Promise<void> => {
     let instance: MongoDBInquisitor = MongoDBInquisitor.init(environment_url);
     for (let elem = 0; elem < params.length; elem++) {
-        if (!(await instance.collectionExists(params[elem].collectionName))) {
-            await instance.createCollection(params[elem].collectionName, params[elem].schema);
-            await instance.insertAny(params[elem].collectionName, params[elem].objects);
-        } else if ((await instance.getCollectionCount(params[elem].collectionName, params[elem].schema)) == 0) 
-            await instance.insertAny(params[elem].collectionName, params[elem].objects);
+        if (!(await instance.collectionExists(Schemas[params[elem].schemaID].collectionName))) {
+            await instance.createCollection(Schemas[params[elem].schemaID]);
+            await instance.insertAny(Schemas[params[elem].schemaID].collectionName, params[elem].objects);
+        } else if ((await instance.getCollectionCount(Schemas[params[elem].schemaID]) == 0)) 
+            await instance.insertAny(Schemas[params[elem].schemaID].collectionName, params[elem].objects);
     }
 }
 
 export const setMongoDBCluster = async (...environments_url: string[]): Promise<void> => {
     let products: Product[] = await ProductService.getProducts();
     let users: User[] = await UserService.getUsers();
-    for (let elem = 0; elem < environments_url.length; elem++) {
-        await createAndInsert(environments_url[elem], [{collectionName: "users", schema: Schemas[SchemasName.USER], objects: users}]);
-        await createAndInsert(environments_url[elem], [{collectionName: "products", schema: Schemas[SchemasName.PRODUCT], objects: products}]);
-    }
+    for (let elem = 0; elem < environments_url.length; elem++) 
+        await createAndInsert(environments_url[elem], [{schemaID: SchemaID.USER, objects: users}, {schemaID: SchemaID.PRODUCT, objects: products}]);
 }

@@ -19,3 +19,5 @@
 - [Artillery](https://www.artillery.io/)
 - [Create](https://stackoverflow.com/questions/31126045/is-it-possible-to-create-a-new-database-in-mongodb-with-mongoose)
 - [Collections](https://stackoverflow.com/questions/13444876/node-js-mongoose-check-if-a-collection-exists)
+- [iterate(map)](https://stackoverflow.com/questions/45656257/the-easiest-way-to-iterate-through-a-collection-in-mongoose)
+- [QueryUndefindedAttribute](https://stackoverflow.com/questions/18710043/mongoose-mongodb-result-fields-appear-undefined-in-javascript)
