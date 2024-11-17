@@ -110,8 +110,6 @@ const createAndInsert = async (environment_url: string, params: { collectionName
 }
 
 export const setMongoDBCluster = async (...environments_url: string[]): Promise<void> => {
-    let userSchema: Schema = new Schema<User>();
-    let productSchema: Schema = new Schema<Product>();
     let products: Product[] = await ProductService.getProducts();
     let users: User[] = await UserService.getUsers();
     for (let elem = 0; elem < environments_url.length; elem++) {

@@ -37,7 +37,7 @@ export class App {
     }
 
     public setRoutes() {
-        this.application.use(Express.json());
+        this.application.use(Express.json()); //remove?
         this.application.use(this.version + this.documentationEndPoint, serve, setup(config, { explorer: true}));
         this.application.use(this.version, authRouter);
         this.application.use(this.version, productRouter);
