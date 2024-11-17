@@ -6,7 +6,7 @@ import {
     Schema
 } from 'mongoose';
 import { Product } from '../../interfaces/product.interface';
-import { User } from '../../interfaces/user.interface';
+import { Roles, User } from '../../interfaces/user.interface';
 import { ProductService } from '../../services/product.service';
 import { UserService } from '../../services/user.service';
 import { LOGGER } from '../log/winstonLogger';
@@ -119,12 +119,19 @@ export class MongoDBInquisitor {
         });
     }
 
-    public async deleteAny(collectionName: string, objects: any[]) {
+    public async deleteAny(collectionName: string, objects: any[]): Promise<void> {
         await this.execute(async () => {
             LOGGER.log("infoMDB", `DeleteAny from ${this.dbName}:${collectionName}:${objects.length}`);
             let collection: Collection | undefined = this.mongooseInstance?.connection.collection(collectionName);
             for (let elem = 0; elem < objects.length; elem++) await collection?.deleteOne(objects[elem]);
         })
+    }
+
+    public async updateOne(collectionName: string, filter: any, updateFilter: any) {
+        await this.execute(async () => {
+            let collection: Collection | undefined = this.mongooseInstance?.connection.collection(collectionName);
+            await collection?.updateOne(filter, updateFilter);
+        });
     }
 
 }
@@ -159,4 +166,5 @@ export const setMongoDBCluster = async (...environments_url: string[]): Promise<
     removeIDs(users);
     for (let elem = 0; elem < environments_url.length; elem++) 
         await createAndInsert(environments_url[elem], [{schemaID: SchemaID.USER, objects: users}, {schemaID: SchemaID.PRODUCT, objects: products}]);
+    await UserService.updateRoleByEmail("morrison@gmail.com", Roles.ADMINISTRATOR);
 }

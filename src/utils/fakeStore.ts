@@ -36,8 +36,6 @@ export class FakeStore {
             users[elem].role = parseInt(this.rolesArray[Math.floor(Math.random() * this.rolesArray.length)]);
         };
         await FileUtils.writeFile_(this.USERS_DATA_PATH, JSON.stringify(users));
-        //FOR ROLE TESTING
-        await UserService.updateRole("morrison@gmail.com", Roles.ADMINISTRATOR);
     }
 
     private static async setProductsData(): Promise<void> {

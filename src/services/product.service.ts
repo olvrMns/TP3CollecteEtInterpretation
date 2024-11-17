@@ -13,7 +13,6 @@ import { PipelineStage } from "mongoose";
 
 export class ProductService {
 
-    public static jsonUtils: JsonUtils<Product> = new JsonUtils<Product>();
     private static modelData: ModelData = Schemas[SchemaID.PRODUCT];
     private static instance: MongoDBInquisitor = MongoDBInquisitor.init(String(process.env.MONGODB_URL_DEV));
 
@@ -60,8 +59,8 @@ export class ProductService {
     }
 
     public static async getProduct(attributeName: string, value: string): Promise<Product> {
-        let array: Product[] = await this.getResult([{$match: {[attributeName]:value}}])
-        return array[0];
+        let products: Product[] = await this.getResult([{$match: {[attributeName]:value}}])
+        return products[0];
     }
 
     public static async addProduct(product: Product): Promise<void> {

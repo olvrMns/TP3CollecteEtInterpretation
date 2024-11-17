@@ -45,8 +45,9 @@ export class AuthController {
     public static async signup(request: Request, response: Response) {
         try {
             LOGGER.alert(LogMessages.SIGNUP_REQUEST_RECEIVED);
-            if (await UserService.addUser(await UserService.getValidUser(request))) response.sendStatus(StatusCodes.CREATED);
-            else throw CrudError.unexpectedSaveError();
+            let user = await UserService.getValidUser(request);
+            await UserService.addUser(user) 
+            response.sendStatus(StatusCodes.CREATED);
         } catch (error: unknown) { 
             if (error instanceof APIError) response.status(StatusCodes.BAD_REQUEST).send(error.message); 
             else RouteUtils.sendUnexpectedMessage(response, error);

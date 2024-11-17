@@ -7,29 +7,52 @@ import { RegexUtils } from "../utils/regexUtils";
 import { Request } from "express";
 import { AuthService } from "./auth.service";
 import { CrudError } from "../errors/crud.error";
+import { ModelData, SchemaID, Schemas } from "../utils/mongoDB/schemas";
+import { MongoDBInquisitor } from "../utils/mongoDB/mongoDB";
+import { PipelineStage } from "mongoose";
 
 export class UserService {
     
     public static jsonUtils: JsonUtils<User> = new JsonUtils<User>();
-    
-    public static async getUsers(): Promise<User[]> {
-        return this.jsonUtils.toArray(await FileUtils.readFile_(FakeStore.USERS_DATA_PATH));
+    private static modelData: ModelData = Schemas[SchemaID.USER];
+    private static instance: MongoDBInquisitor = MongoDBInquisitor.init(String(process.env.MONGODB_URL_DEV));
+
+    private static mapQueryResult(queryResult: any, aggregation: boolean = true): User[] {
+        let users: User[] = [];
+        queryResult.map(object => {
+            if (!aggregation) object = object.toObject();
+            users.push({
+                address: object.address,
+                email: object.email,
+                username: object.username,
+                password: object.password,
+                name: object.name,
+                phone: object.phone,
+                role: object.role
+            });
+        }); 
+        return users;
     }
 
-    public static async getUser(attributeName: string, value: string): Promise<User | null> {
-        let users: User[] = await this.getUsers();
-        for (let elem = 0; elem < users.length; elem++) if (users[elem]?.[attributeName] + "" == value) return users[elem];
-        return null;
+    private static async getResult(pipeline: PipelineStage[]): Promise<User[]> {
+        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, pipeline)); 
+    }
+
+    public static async getUsers(): Promise<User[]> {
+        return this.mapQueryResult(this.instance.getAllDocuments(this.modelData), false);
+    }
+
+    public static async getUser(attributeName: string, value: string): Promise<User> {
+        let users: User[] = await this.getResult([{$match:{[attributeName]:value}}]);
+        return users[0];
     }
 
     public static async addUser(user: User) {
-        return this.jsonUtils.addObject(user, FakeStore.USERS_DATA_PATH);
+        return this.instance.insertAny(this.modelData.collectionName, [user]);
     }
 
-    public static async updateRole(email: string, role: Roles): Promise<boolean> {
-        let users: User[] = await this.getUsers();
-        for (let elem = 0; elem < users.length; elem++) if (users[elem].email == email) users[elem].role = role;
-        return await FileUtils.writeFile_(FakeStore.USERS_DATA_PATH, JSON.stringify(users));
+    public static async updateRoleByEmail(email: string, role: Roles): Promise<void> {
+        await this.instance.updateOne(this.modelData.collectionName, {email: email}, {role: role});
     }
 
     public static async isUnique(attributeName: string, value: string): Promise<boolean> {
