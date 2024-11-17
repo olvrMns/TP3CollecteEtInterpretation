@@ -113,10 +113,18 @@ export class MongoDBInquisitor {
 
     public async insertAny(collectionName: string, objects: any[]): Promise<void> {
         await this.execute(async () => {
-            let collection: Collection | undefined = this.mongooseInstance?.connection.collection(collectionName);
             LOGGER.log("infoMDB", `InsertAny into ${this.dbName}:${collectionName}:${objects.length}`);
+            let collection: Collection | undefined = this.mongooseInstance?.connection.collection(collectionName);
             for (let elem = 0; elem < objects.length; elem++) await collection?.insertOne(objects[elem]);
         });
+    }
+
+    public async deleteAny(collectionName: string, objects: any[]) {
+        await this.execute(async () => {
+            LOGGER.log("infoMDB", `DeleteAny from ${this.dbName}:${collectionName}:${objects.length}`);
+            let collection: Collection | undefined = this.mongooseInstance?.connection.collection(collectionName);
+            for (let elem = 0; elem < objects.length; elem++) await collection?.deleteOne(objects[elem]);
+        })
     }
 
 }

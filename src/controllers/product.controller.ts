@@ -46,8 +46,8 @@ export class ProductController implements Controller {
     public async removeOne(request: Request, response: Response): Promise<void> {
         try {
             LOGGER.info(LogMessages.REMOVE_ONE_PRODUCT_REQUEST_RECEIVED);
-            let product: Product | null = await ProductService.getProduct(request.params.attribute, request.params.value);
-            await ProductService.removeProduct(product as Product);
+            let product: Product = await ProductService.getProduct(request.params.attribute, request.params.value);
+            await ProductService.removeProduct(product);
             response.sendStatus(StatusCodes.OK);
         } catch (error) { 
             if (error instanceof APIError) response.status(StatusCodes.BAD_REQUEST).send(error.message);

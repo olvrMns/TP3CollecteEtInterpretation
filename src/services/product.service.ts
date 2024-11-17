@@ -85,7 +85,7 @@ export class ProductService {
     }
 
     public static async removeProduct(product: Product): Promise<void> {
-        //
+        await this.instance.deleteAny(this.modelData.collectionName, [product]);
     }
 
 }
