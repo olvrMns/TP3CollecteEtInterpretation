@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "dbd90f9c-46f1-4a7c-bcf9-5bbfcbc8c669",
+		"name": "V2_API_FAKE_PRODUCT",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Tests\" tab**\n\nTests help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/b5f280a7-4b09-48ec-857f-0a7ed99d7ef8/U2NyZWVuc2hvdCAyMDIzLTAzLTI3IGF0IDkuNDcuMjggUE0ucG5n\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) in \"Tests\" to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32997662"
+	},
+	"item": [
+		{
+			"name": "OLI_LOGIN",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im1vcnJpc29uQGdtYWlsLmNvbSIsIm5hbWUiOnsiZmlyc3RuYW1lIjoiZGF2aWQiLCJsYXN0bmFtZSI6Im1vcnJpc29uIn0sInVzZXJuYW1lIjoibW9yXzIzMTQifSwiaWF0IjoxNzI4MTA5MDMxLCJleHAiOjE3MjgxMDk2MzF9.p2AmjYsBci-HPmwZnlQEf8D3u6zmc73Hy_UGn7nAr2A",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"oli\",\r\n    \"password\": \"83wafawfawfaBfw+a$$44f_\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5555/v2/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v2",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OLI_SIGNUP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"oli\",\r\n    \"password\": \"83wafawfawfaBfw+a$$44f_\",\r\n    \"name\": {\r\n        \"firstName\": \"oli\",\r\n        \"lastName\": \"oli\"\r\n    },\r\n    \"email\": \"oli@waesh.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5555/v2/signup",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v2",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADMIN_LOGIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"morrison@gmail.com\",\r\n    \"password\": \"83r5^_\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5555/v2/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v2",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "JEAN_SIGNUP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"jeanfrrb\",\r\n    \"password\": \"marA_5A55+AAA\",\r\n    \"name\": {\r\n        \"firstName\": \"jean\",\r\n        \"lastName\": \"fre\"\r\n    },\r\n    \"email\": \"jeanfrabncois@wsltaesh.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5555/v2/signup",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v2",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_ALL_PRODUCT",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im1vcnJpc29uQGdtYWlsLmNvbSIsIm5hbWUiOnsiZmlyc3RuYW1lIjoiZGF2aWQiLCJsYXN0bmFtZSI6Im1vcnJpc29uIn0sInVzZXJuYW1lIjoibW9yXzIzMTQifSwiaWF0IjoxNzI4NDg5NjU4LCJleHAiOjE3Mjg0OTAyNTh9.SwoQGEAZBse9KES7QDdaTRI6Mg5nETAPzWEorqwZOi8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5555/v2/product/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v2",
+						"product",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PRODUCT_PRICE_RANGE",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im1vcnJpc29uQGdtYWlsLmNvbSIsIm5hbWUiOnsiZmlyc3RuYW1lIjoiZGF2aWQiLCJsYXN0bmFtZSI6Im1vcnJpc29uIn0sInVzZXJuYW1lIjoibW9yXzIzMTQifSwiaWF0IjoxNzI4NDg5NjU4LCJleHAiOjE3Mjg0OTAyNTh9.SwoQGEAZBse9KES7QDdaTRI6Mg5nETAPzWEorqwZOi8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5555/v2/product/minPrice=5.55&maxPrice=30",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v2",
+						"product",
+						"minPrice=5.55&maxPrice=30"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SAVE_PRODUCT",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im1vcnJpc29uQGdtYWlsLmNvbSIsIm5hbWUiOnsiZmlyc3RuYW1lIjoiZGF2aWQiLCJsYXN0bmFtZSI6Im1vcnJpc29uIn0sInVzZXJuYW1lIjoibW9yXzIzMTQifSwiaWF0IjoxNzI4ODU4MDk0LCJleHAiOjE3Mjg4NTg2OTR9.8wkpM6BdvILXLl5lxSJ2TVIWRDkLOfyICpCsTjEVh9k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"salut\",\r\n    \"price\": 5.68,\r\n    \"description\": \"A afawonfawon fauf afouwab fwabf awubf aufb awuf bafauwjfbaibag ouahg; ag\",\r\n    \"image\": \"...\",\r\n    \"category\": \"slt\",\r\n    \"stock\": 50,\r\n    \"rating\": {\r\n        \"rate\": 5.99,\r\n        \"count\": 500\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5555/v2/product/save",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v2",
+						"product",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "REMOVE_PRODUCT",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im9saUB3YWVzaC5jb20iLCJuYW1lIjp7ImZpcnN0TmFtZSI6Im9saSIsImxhc3ROYW1lIjoib2xpIn0sInVzZXJuYW1lIjoib2xpIn0sImlhdCI6MTcyODg2NDU2NywiZXhwIjoxNzI4ODY1MTY3fQ.aY2n8cyJLouz2n7fCr7fhEvuK1a73FMRLm0687JGHZo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5555/v2/product/remove/att=title&v=salut",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v2",
+						"product",
+						"remove",
+						"att=title&v=salut"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_ONE_PRODUCT",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im1vcnJpc29uQGdtYWlsLmNvbSIsIm5hbWUiOnsiZmlyc3RuYW1lIjoiZGF2aWQiLCJsYXN0bmFtZSI6Im1vcnJpc29uIn0sInVzZXJuYW1lIjoibW9yXzIzMTQifSwiaWF0IjoxNzI4ODYzMDY2LCJleHAiOjE3Mjg4NjM2NjZ9.CdZLauevhtttsC9-ZOyaJbLNCz4_pbUnAHkQ-K3ftlI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5555/v2/product/att=title&v=salut",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v2",
+						"product",
+						"att=title&v=salut"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}

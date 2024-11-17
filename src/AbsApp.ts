@@ -25,7 +25,7 @@ export class App {
     public application: Application = Express();
     private httpServer: Server | null = null;
     private httpsServer: HTTPSServer | null = null;
-    private version: string = "/v1";
+    private version: string = "/v2";
     private documentationEndPoint: string = "/doc";
 
     private constructor() {}
