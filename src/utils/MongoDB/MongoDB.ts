@@ -12,6 +12,9 @@ import { UserService } from '../../services/user.service';
 import { LOGGER } from '../log/winstonLogger';
 import { Schemas, SchemaID, ModelData } from './schemas';
 import { PipelineID, pipelines } from './pipelines';
+import { JsonUtils } from '../jsonUtils';
+import { FileUtils } from '../fileUtils';
+import { FakeStore } from '../fakeStore';
 
 export interface CollectionExistsResponse {
     exists: boolean;
@@ -129,9 +132,23 @@ const createAndInsert = async (environment_url: string, params: { schemaID: Sche
     }
 }
 
+/**
+ * @note
+ * - to remove ids
+ * - needs reformating...  
+ */
+const removeIDs = (objects: any[]): void => {
+    for (let elem of objects) 
+        delete elem.id
+}
+
 export const setMongoDBCluster = async (...environments_url: string[]): Promise<void> => {
-    let products: Product[] = await ProductService.getProducts();
-    let users: User[] = await UserService.getUsers();
+    let productsJsonUtils: JsonUtils<Product> = new JsonUtils<Product>();
+    let usersJsonUtils: JsonUtils<User> = new JsonUtils<User>();
+    let products: Product[] = productsJsonUtils.toArray(await FileUtils.readFile_(FakeStore.PRODUCTS_DATA_PATH));
+    removeIDs(products)
+    let users: User[] = usersJsonUtils.toArray(await FileUtils.readFile_(FakeStore.USERS_DATA_PATH));
+    removeIDs(users);
     for (let elem = 0; elem < environments_url.length; elem++) 
         await createAndInsert(environments_url[elem], [{schemaID: SchemaID.USER, objects: users}, {schemaID: SchemaID.PRODUCT, objects: products}]);
 }

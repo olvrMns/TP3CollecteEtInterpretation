@@ -1,5 +1,3 @@
+import {Types} from 'mongoose';
 
-
-export interface Entity {
-    id: number
-}
+export interface Entity {}

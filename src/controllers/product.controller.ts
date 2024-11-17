@@ -18,7 +18,7 @@ export class ProductController implements Controller {
     public async getOne(request: Request, response: Response): Promise<void> {
         try {
             LOGGER.info(LogMessages.GET_ONE_PRODUCT_REQUEST_RECEIVED);
-            let product: Product | null = await ProductService.getProduct(request.params.attribute, request.params.value);
+            let product: Product = await ProductService.getProduct(request.params.attribute, request.params.value);
             response.status(StatusCodes.OK).send(product);
         } catch (error) { response.sendStatus(StatusCodes.BAD_REQUEST); }
     }

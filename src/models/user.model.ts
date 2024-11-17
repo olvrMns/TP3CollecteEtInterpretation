@@ -5,7 +5,6 @@ import { Name } from "../interfaces/user.interface";
 export class UserModel implements User {
 
     constructor(
-        public id: number, 
         public email: string, 
         public username: string, 
         public password: string,
@@ -15,8 +14,8 @@ export class UserModel implements User {
         public role: number = Roles.EMPLOYEE) {
     }
 
-    public static getInstance(id: number, email: string, username: string, password: string, name: Name) {
-        return new UserModel(id, email, username, password, name, null, null);
+    public static getInstance(email: string, username: string, password: string, name: Name) {
+        return new UserModel(email, username, password, name, null, null);
     }
 
 }

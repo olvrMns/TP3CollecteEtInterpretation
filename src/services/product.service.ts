@@ -9,6 +9,7 @@ import { RegexUtils } from "../utils/regexUtils";
 import { ModelData, SchemaID, Schemas } from "../utils/mongoDB/schemas";
 import { MongoDBInquisitor } from "../utils/mongoDB/mongoDB";
 import { PipelineID, pipelines } from "../utils/mongoDB/pipelines";
+import { PipelineStage } from "mongoose";
 
 export class ProductService {
 
@@ -21,7 +22,6 @@ export class ProductService {
         queryResult.map(object => {
             if (!aggregation) object = object.toObject();
             products.push({
-                id: object.id,
                 title: object.title,
                 price: object.price,
                 description: object.description,
@@ -33,37 +33,43 @@ export class ProductService {
         }); 
         return products;
     }
+
+    private static async getResult(pipeline: PipelineStage[]): Promise<Product[]> {
+        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, pipeline)); 
+    }
     
-    public static async getProducts(): Promise<Product[]> {
+    /**
+     * 
+     * @note 
+     * getProducts for everything?
+     */
+    public static async getProducts(): Promise<Product[]> { 
         return this.mapQueryResult(await this.instance.getAllDocuments(this.modelData), false);
     }
 
     public static async getProductsByCategory(category: string): Promise<Product[]> {
-        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, [{$match: {"category":category}}]));
+        return await this.getResult([{$match: {"category":category}}]);
     }
     
     public static async getProductsByPrice(min: number, max: number): Promise<Product[]> {
-        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, [{$match: {"price": {$gte: min, $lte: max}}}]));
+        return await this.getResult([{$match: {"price": {$gte: min, $lte: max}}}]);
     }
 
     public static async getProductsByStock(min: number, max: number): Promise<Product[]> {
-        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, [{$match: {"stock": {$gte: min, $lte: max}}}]));
+        return await this.getResult([{$match: {"stock": {$gte: min, $lte: max}}}]);
     }
 
-    public static async getProduct(attributeName: string, value: string): Promise<Product | null> {
-        let products: Product[] = await this.getProducts();
-        for (let elem: number = 0; elem < products.length; elem++) 
-            if (products[elem]?.[attributeName] + "" == value) return products[elem] 
-        throw APIError.entityNotFound();
+    public static async getProduct(attributeName: string, value: string): Promise<Product> {
+        let array: Product[] = await this.getResult([{$match: {[attributeName]:value}}])
+        return array[0];
     }
 
-    public static async addProduct(product: Product): Promise<boolean> {
-        return await this.jsonUtils.addObject(product, FakeStore.PRODUCTS_DATA_PATH);
+    public static async addProduct(product: Product): Promise<void> {
+        await this.instance.insertAny(this.modelData.collectionName, [product]);
     }
 
     public static async getValidProduct(request: Request): Promise<Product> {
         let nProduct: Product = new ProductModel(
-            await ProductService.jsonUtils.getUniqueId(await ProductService.getProducts()),
                 RegexUtils.testStrLimit(request.body.title, "title"),
                 parseFloat(RegexUtils.testPositiveDecimal(request.body.price, "price")),
                 RegexUtils.testStrLimit(request.body.description, "description", 5000),
@@ -78,8 +84,8 @@ export class ProductService {
         return nProduct;
     }
 
-    public static async removeProduct(product: Product) {
-        return await this.jsonUtils.removeObject(product, FakeStore.PRODUCTS_DATA_PATH);
+    public static async removeProduct(product: Product): Promise<void> {
+        //
     }
 
 }

@@ -42,7 +42,6 @@ export class UserService {
         if (!await this.isUnique("username", request.body.username)) throw CrudError.notUniqueError("username");
         if (!await this.isUnique("email", request.body.email)) throw CrudError.notUniqueError("email");
         let user: User = UserModel.getInstance(
-            await UserService.jsonUtils.getUniqueId(await UserService.getUsers()),
             RegexUtils.testEmail(request.body.email),
             RegexUtils.testUsername(request.body.username),
             await AuthService._hashPwd(RegexUtils.testPassword(request.body.password)),

@@ -24,18 +24,5 @@ export class JsonUtils<T extends Entity> {
         });
         return await FileUtils.writeFile_(path, JSON.stringify(objects));
     }
-
-    public async removeObject(object: T, path: string): Promise<boolean> {
-        let objects: T[] = this.toArray(await FileUtils.readFile_(path));
-        return await FileUtils.writeFile_(path, JSON.stringify(objects.filter(object_ => object_.id != object.id)));
-    }
-
-    public async getUniqueId(entities: T[]): Promise<number> {
-        let ids: number[] = [];
-        let nId: number = 1;
-        for (let elem: number = 0; elem < entities.length; elem++) ids.push(entities[elem].id);
-        while (ids.includes(nId)) nId++;
-        return nId;
-    }
     
 }
