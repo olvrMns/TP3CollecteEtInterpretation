@@ -10,11 +10,14 @@ const productController: ProductController = new ProductController();
 router.get(PRODUCT_ENDPOINT_PREFIX, 
     RouteUtils.getAuthorizedRoute(productController.getAll));
 
+router.get(PRODUCT_ENDPOINT_PREFIX + "/category=:category",
+    RouteUtils.getAuthorizedRoute(productController.getAllByCategory));
+
 router.get(PRODUCT_ENDPOINT_PREFIX + "/minPrice=:min&maxPrice=:max", 
     RouteUtils.getAuthorizedRoute(productController.getAllByPrice));
 
 router.get(PRODUCT_ENDPOINT_PREFIX + "/minStock=:min&maxStock=:max", 
-    RouteUtils.getAuthorizedRoute(productController.getAllByStock)); //needs fix
+    RouteUtils.getAuthorizedRoute(productController.getAllByStock)); 
 
 router.get(PRODUCT_ENDPOINT_PREFIX + "/att=:attribute&v=:value", 
     RouteUtils.getAuthorizedRoute(productController.getOne));

@@ -70,9 +70,11 @@ export class MongoDBInquisitor {
     public async collectionExists(collectionName: string): Promise<boolean> {
         let res: boolean = false;
         await this.execute(async () => {
-            let collections: any = await this.mongooseInstance?.connection.db.listCollections().toArray();
-            for (let elem = 0; elem < collections.length; elem++) if (collections[elem].name == collectionName) res = true;
             LOGGER.log('infoMDB', `Check exists for ${this.dbName}:${collectionName} ...`);
+            let collections: any = await this.mongooseInstance?.connection.db.listCollections().toArray();
+            for (let elem = 0; elem < collections.length; elem++) if (collections[elem].name == collectionName) {
+                res = true;
+            }
         });
         return res;
     }
@@ -95,11 +97,13 @@ export class MongoDBInquisitor {
         return res;
     }
 
-    public async getAggregation(modelData: ModelData, pipelineID: PipelineID): Promise<any> {
+    public async getAggregation(modelData: ModelData, pipeline: PipelineStage[]): Promise<any> {
         let res: any;
         await this.execute(async () => {
             let Model = this.mongooseInstance?.connection.model(modelData.collectionName, modelData.schema);
-            res = await Model?.aggregate(pipelines[pipelineID]);
+            await Model?.aggregate(pipeline).then((rep) => {
+                res = rep;
+            })
         });
         return res;
     }

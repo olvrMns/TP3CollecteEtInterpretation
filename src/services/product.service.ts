@@ -16,10 +16,10 @@ export class ProductService {
     private static modelData: ModelData = Schemas[SchemaID.PRODUCT];
     private static instance: MongoDBInquisitor = MongoDBInquisitor.init(String(process.env.MONGODB_URL_DEV));
 
-    private static mapQueryResult(queryResult: any): Product[] {
+    private static mapQueryResult(queryResult: any, aggregation: boolean = true): Product[] {
         let products: Product[] = [];
         queryResult.map(object => {
-            object = object.toObject();
+            if (!aggregation) object = object.toObject();
             products.push({
                 id: object.id,
                 title: object.title,
@@ -35,26 +35,21 @@ export class ProductService {
     }
     
     public static async getProducts(): Promise<Product[]> {
-        return this.mapQueryResult(await this.instance.getAllDocuments(this.modelData));
+        return this.mapQueryResult(await this.instance.getAllDocuments(this.modelData), false);
     }
 
     public static async getProductsByCategory(category: string): Promise<Product[]> {
-        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, PipelineID.PRODUCTS_BY_CATEGORY));
+        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, [{$match: {"category":category}}]));
     }
     
     public static async getProductsByPrice(min: number, max: number): Promise<Product[]> {
-        let products: Product[] = await this.getProducts();
-        return products.filter(product => product.price >= min && product.price <= max);
+        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, [{$match: {"price": {$gte: min, $lte: max}}}]));
     }
 
     public static async getProductsByStock(min: number, max: number): Promise<Product[]> {
-        let products: Product[] = await this.getProducts();
-        return products.filter(product => product.stock >= min && product.stock <= max);
+        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, [{$match: {"stock": {$gte: min, $lte: max}}}]));
     }
 
-    /**
-     * @note ...
-     */
     public static async getProduct(attributeName: string, value: string): Promise<Product | null> {
         let products: Product[] = await this.getProducts();
         for (let elem: number = 0; elem < products.length; elem++) 

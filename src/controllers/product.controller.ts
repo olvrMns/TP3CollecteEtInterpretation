@@ -55,6 +55,16 @@ export class ProductController implements Controller {
         }
     }
 
+    public async getAllByCategory(request: Request, response: Response): Promise<void> {
+        try {
+            const {params} = request;
+            response.status(StatusCodes.OK).send(await ProductService.getProductsByCategory(params.category));
+        } catch (error) { 
+            console.log(String(error))
+            response.sendStatus(StatusCodes.BAD_REQUEST); 
+        }
+    }
+
     public async getAllByPrice(request: Request, response: Response): Promise<void> {
         try {
             const {params} = request;
