@@ -1,6 +1,7 @@
 
 export const LogMessages: {[alias: string]: string} = {
-    SERVER_START: "Server started successfully...",
+    SERVER_START_HTTPS: "Server [HTTPS] started successfully...",
+    SERVER_START_HTTP: "Server [HTTP] started successfully...",
     FAKE_STORE_DATA_FILE_ERROR: "Something went wrong while writing the fake data...",
     FAKE_STORE_DATA_FILE_SUCCESS: "Fake data writing operation was successfull...",
     DATA_ADDED_SUCCESSFULLY: "Object was successfully added to the file...",

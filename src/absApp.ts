@@ -50,11 +50,13 @@ export class App {
      * (http)this.server = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
      */
     public start(): Application {
-        this.httpsServer = createServer({
-            key: readFileSync("./cert/privateKey.pem"),
-            cert: readFileSync("./cert/publicKey.crt")
-        }, this.application);
-        this.httpsServer.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
+        if (process.env.HTTPS) {
+            this.httpsServer = createServer({
+                key: readFileSync("./cert/privateKey.pem"),
+                cert: readFileSync("./cert/publicKey.crt")
+            }, this.application);
+            this.httpsServer.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START_HTTPS));
+        } else this.httpServer = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START_HTTP));
         this.setRoutes();
         return this.application;
     }
