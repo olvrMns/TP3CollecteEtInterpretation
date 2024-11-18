@@ -10,9 +10,9 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "noImplicitAny": false,
-    "types": ["node", "./types/express/index.d.ts"]
+    "types": ["mocha", "node", "./types/express/index.d.ts"]
   },
-  "include": ["./src/", "./public", "./types", "src/test"],
+  "include": ["./src/**/*.ts"],
   "exclude": ["node_modules", "out"],
   "ts-node": {
     "esm": true

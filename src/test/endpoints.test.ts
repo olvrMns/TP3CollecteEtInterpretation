@@ -1,54 +1,31 @@
+import supertest from "supertest";
+import { Application } from "express";
+import { App } from "../absApp";
+import { expect } from "chai";
 
-// describe("Endpoints Test", () => {
+const serv = async (): Promise<Application | undefined> => {
+    let application: Application | undefined;
+    await App.getInstance().then((response) => {
+        application = response.start();
+    })
+    return application;
+}
 
-//   describe("Authentication", () => {
+describe("Endpoints", () => {
 
-//     test("Admin login", async () => {
-//       // await request(app).post("/v2/login")
-//       // .send({ "username": "morrison@gmail.com", "password": "83r5^_" })
-//       // .then((response) => {
-//       //   expect(response.statusCode).toBe(200);
-//       // })
-//       // .catch((err) => {
-//       //   console.log(err)
-//       // })
-//       //expect(2+2).toEqual(4);
-//     });
-  
-//     // test("User signup (oli)", async () => {
-  
-//     // });
-  
-//     // test("User login (oli)", async () => {
-  
-//     // });
+    describe("Server", () => {
 
-//   });
+        it("Server init", async () => {
+            let application = await serv();
+            expect(application).to.be.not("undefined");
+        })
 
-//   // describe("Products endpoints", () => {
+    })
 
-//   //   test("Get One", async () => {
-    
-//   //   });
-  
-//   //   test("Save one", async () => {
-  
-//   //   });
-    
-//   //   test("Products by category", async () => {
-  
-//   //   });
-  
-//   //   test("Products by stock attribute", async () => {
-  
-//   //   });
-    
-//   //   test("Products price range", async () => {
-  
-//   //   });
 
-//   // });
+    // describe("Authentication", () => {
 
-// });
+        
+    // })
 
- 
+})

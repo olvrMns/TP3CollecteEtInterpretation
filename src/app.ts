@@ -1,10 +1,12 @@
+import { Application } from "express";
 import { App } from "./absApp";
 
-let app: App | undefined;
+let application: Application | undefined;
 
 (async () => {
-    app = await App.getInstance();
-    app.start();
+    await App.getInstance().then((rep) => {
+        if (rep) application = rep.start();
+    })
 })();
 
-export default app?.application;
+export default application;

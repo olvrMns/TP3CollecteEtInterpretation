@@ -10,6 +10,7 @@
     - npm install dotenv
     - npm install http-status-codes
     - npm install mocha
+    - npm install chai
     - [npm install mongoose](https://www.npmjs.com/package/mongoose)
 
 - ## --save-dev
@@ -25,6 +26,7 @@
     - npm install --save-dev @types/supertest 
     - npm install --save-dev @types/node
     - npm install --save-dev @types/mocha
+    - npm install --save-dev @types/chai
     - npm install --save-dev nodemon
     - npm install --save-dev typescript
     - npm install --save-dev ts-node
