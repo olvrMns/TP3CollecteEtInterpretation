@@ -10,9 +10,9 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "noImplicitAny": false,
-    "types": ["jest", "node", "./types/express/index.d.ts"]
+    "types": ["node", "./types/express/index.d.ts"]
   },
-  "include": ["./src/", "./public", "./types"],
+  "include": ["./src/", "./public", "./types", "src/test"],
   "exclude": ["node_modules", "out"],
   "ts-node": {
     "esm": true

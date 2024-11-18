@@ -9,6 +9,7 @@
     - npm install swagger-jsdoc
     - npm install dotenv
     - npm install http-status-codes
+    - npm install mocha
     - [npm install mongoose](https://www.npmjs.com/package/mongoose)
 
 - ## --save-dev
@@ -20,13 +21,14 @@
     - npm install --save-dev @types/express
     - npm install --save-dev @types/node
     - npm install --save-dev @types/dotenv
-    - npm install --save-dev @types/jest 
+    - npm install --save-dev @types/jest <== not for mongoose
     - npm install --save-dev @types/supertest 
     - npm install --save-dev @types/node
+    - npm install --save-dev @types/mocha
     - npm install --save-dev nodemon
     - npm install --save-dev typescript
     - npm install --save-dev ts-node
     - npm install --save-dev supertest 
-    - npm install --save-dev jest 
-    - npm install --save-dev ts-jest 
+    - npm install --save-dev jest <== not for mongoose
+    - npm install --save-dev ts-jest <== not for mongoose
     - npm install --save-dev cross-env
