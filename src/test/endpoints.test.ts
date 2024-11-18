@@ -4,14 +4,7 @@ import { App } from "../absApp";
 import { Server } from "https";
 //import { assert, expect, should } from "chai"; //ts file bug
 
-const serv = async (): Promise<Application | undefined> => {
-    let application: Application | undefined;
-    await App.getInstance().then((response) => {
-        application = response.start();
-    })
-    return application;
-}
-
+let appInstance: App | undefined;
 let expressApplication: Application | undefined;
 let adminToken: string | undefined;
 let regUserToken: string | undefined;
@@ -20,14 +13,11 @@ let regUser = {username: "oli",password: "83wafawfawfaBfw+a$$44f_"};
 
 describe("Endpoints", () => {
 
-    after(() => {
-        
-    })
-
     describe("Server", () => {
 
         it("Server init", async () => {
-            expressApplication = await serv();
+            appInstance = await App.getInstance();
+            expressApplication = appInstance.start()
             supertest(expressApplication as Application)
             .get("/")
             .expect(200);
