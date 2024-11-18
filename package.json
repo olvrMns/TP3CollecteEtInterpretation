@@ -4,9 +4,9 @@
   "author": "olvr",
   "scripts": {
     "build": "tsc",
-    "dev": "SET NODE_ENV=dev&nodemon src/app.ts",
-    "test": "jest --coverage",
-    "prod": "NODE_ENV=prod node dist/app.js"
+    "dev": "cross-env NODE_ENV=dev nodemon src/app.ts",
+    "test": "cross-env NODE_ENV=dev jest --coverage",
+    "prod": "cross-env NODE_ENV=prod node dist/app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -31,6 +31,7 @@
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui": "^3.52.4",
     "@types/swagger-ui-express": "^4.1.6",
+    "cross-env": "^7.0.3",
     "jest": "^29.7.0",
     "nodemon": "^3.1.7",
     "supertest": "^7.0.0",

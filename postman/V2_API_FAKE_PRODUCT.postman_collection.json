@@ -137,7 +137,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im1vcnJpc29uQGdtYWlsLmNvbSIsIm5hbWUiOnsiZmlyc3RuYW1lIjoiZGF2aWQiLCJsYXN0bmFtZSI6Im1vcnJpc29uIn0sInVzZXJuYW1lIjoibW9yXzIzMTQifSwiaWF0IjoxNzI4NDg5NjU4LCJleHAiOjE3Mjg0OTAyNTh9.SwoQGEAZBse9KES7QDdaTRI6Mg5nETAPzWEorqwZOi8",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im9saUB3YWVzaC5jb20iLCJuYW1lIjp7ImZpcnN0TmFtZSI6Im9saSIsImxhc3ROYW1lIjoib2xpIn0sInVzZXJuYW1lIjoib2xpIn0sImlhdCI6MTczMTg4MTU3NiwiZXhwIjoxNzMxODg3NTc2fQ.B5m4cJkwsu4YEMmkXUx_pLWK_M1cb5BwEZJcFqyH0c8",
 							"type": "string"
 						}
 					]
@@ -168,7 +168,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im1vcnJpc29uQGdtYWlsLmNvbSIsIm5hbWUiOnsiZmlyc3RuYW1lIjoiZGF2aWQiLCJsYXN0bmFtZSI6Im1vcnJpc29uIn0sInVzZXJuYW1lIjoibW9yXzIzMTQifSwiaWF0IjoxNzI4NDg5NjU4LCJleHAiOjE3Mjg0OTAyNTh9.SwoQGEAZBse9KES7QDdaTRI6Mg5nETAPzWEorqwZOi8",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im9saUB3YWVzaC5jb20iLCJuYW1lIjp7ImZpcnN0TmFtZSI6Im9saSIsImxhc3ROYW1lIjoib2xpIn0sInVzZXJuYW1lIjoib2xpIn0sImlhdCI6MTczMTg2Nzc5OCwiZXhwIjoxNzMxODczNzk4fQ.uaYcsaPL4EtgesoW7-LMRNPCpODdLekRW_CTbyAN6LU",
 							"type": "string"
 						}
 					]
@@ -176,7 +176,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:5555/v2/product/minPrice=5.55&maxPrice=30",
+					"raw": "https://localhost:5555/v2/product/minPrice=0&maxPrice=15",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -185,7 +185,7 @@
 					"path": [
 						"v2",
 						"product",
-						"minPrice=5.55&maxPrice=30"
+						"minPrice=0&maxPrice=15"
 					]
 				}
 			},
@@ -298,6 +298,68 @@
 						"v2",
 						"product",
 						"att=title&v=salut"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PRODUCTS_CATEGORY",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im9saUB3YWVzaC5jb20iLCJuYW1lIjp7ImZpcnN0TmFtZSI6Im9saSIsImxhc3ROYW1lIjoib2xpIn0sInVzZXJuYW1lIjoib2xpIn0sImlhdCI6MTczMTg2Nzc5OCwiZXhwIjoxNzMxODczNzk4fQ.uaYcsaPL4EtgesoW7-LMRNPCpODdLekRW_CTbyAN6LU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5555/v2/product/category=electronics",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v2",
+						"product",
+						"category=electronics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PRODUCTS_STOCK",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJlbWFpbCI6Im9saUB3YWVzaC5jb20iLCJuYW1lIjp7ImZpcnN0TmFtZSI6Im9saSIsImxhc3ROYW1lIjoib2xpIn0sInVzZXJuYW1lIjoib2xpIn0sImlhdCI6MTczMTg4MTU3NiwiZXhwIjoxNzMxODg3NTc2fQ.B5m4cJkwsu4YEMmkXUx_pLWK_M1cb5BwEZJcFqyH0c8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5555/v2/product/minStock=0&maxStock=15",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"v2",
+						"product",
+						"minStock=0&maxStock=15"
 					]
 				}
 			},
