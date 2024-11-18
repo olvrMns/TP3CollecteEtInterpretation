@@ -1,6 +1,6 @@
 import { Application } from "express";
 import supertest from "supertest";
-import { App } from "../AbsApp";
+import { App } from "../absApp";
 //import { assert, expect, should } from "chai"; //ts file bug
 
 let appInstance: App | undefined;

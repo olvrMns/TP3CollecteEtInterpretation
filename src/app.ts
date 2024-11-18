@@ -1,5 +1,5 @@
 import { Application } from "express";
-import { App } from "./AbsApp";
+import { App } from "./absApp";
 
 let application: Application | undefined;
 
