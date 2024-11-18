@@ -37,34 +37,50 @@ describe("Endpoints", () => {
 
     describe("Authentication", () => {
 
-        it("Admin login", async () => {
+        it("Admin login", (done) => {
             supertest(expressApplication as Application)
             .post("/v2/login")
             .send(adminUser)
             .expect(200)
-            .then((response) => adminToken = response.text);
+            .then((response) => {
+                adminToken = response.text;
+                done();
+            })
+            .catch((error) => done(error))
         })
 
-        it("Reg User login", async () => {
+        it("Reg User login", (done) => {
             supertest(expressApplication as Application)
             .post("/v2/login")
             .send(regUser)
             .expect(200)
-            .then((response) => regUserToken = response.text);
+            .then((response) => {
+                regUserToken = response.text;
+                done();
+            })
+            .catch((error) => done(error))
+        })
+
+        it("Invalid authentication", (done) => {
+            supertest(expressApplication as Application)
+            .post("/v2/login")
+            .send({username: "morrison@gmail.com",password: "..."})
+            .expect(401)
+            .then((response) => done("???"))
+            .catch((error) => done())
         })
         
     })
 
     describe("Products", () => {
 
-        it("Get All Products", async () => {
+        it("Get All Products", (done) => {
             supertest(expressApplication as Application)
             .get("/v2/product/")
             .set('Authorization', `Bearer ${regUserToken}`)
             .expect(200)
-            .then((response) => {
-                console.log(response)
-            })
+            .then((response) => {done()})
+            .catch((error) => done(error))
         })
 
         // it("Get All Products", async () => {
