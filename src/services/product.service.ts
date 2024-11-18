@@ -14,7 +14,7 @@ import { PipelineStage } from "mongoose";
 export class ProductService {
 
     private static modelData: ModelData = Schemas[SchemaID.PRODUCT];
-    private static instance: MongoDBInquisitor = MongoDBInquisitor.init(String(process.env.MONGODB_URL_DEV));
+    private static instance: MongoDBInquisitor = MongoDBInquisitor.init(String(process.env.MONGODB_URL));
 
     private static mapQueryResult(queryResult: any, aggregation: boolean = true): Product[] {
         let products: Product[] = [];

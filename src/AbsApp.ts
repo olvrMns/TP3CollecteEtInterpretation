@@ -1,5 +1,5 @@
 import Dotenv from "dotenv";
-Dotenv.config({path: "./.TEMP.env"});
+Dotenv.config({path: `${__dirname}/../.${process.env.NODE_ENV}.env`});
 import Express, { Application } from "express";
 import { readFileSync } from 'fs';
 import { Server } from "http";
@@ -32,7 +32,7 @@ export class App {
 
     public static async getInstance(): Promise<App> {
         await FakeStore.setAllData();
-        await setMongoDBCluster(String(process.env.MONGODB_URL_PROD), String(process.env.MONGODB_URL_DEV));
+        await setMongoDBCluster(String(process.env.MONGODB_URL));
         return new App();
     }
 
@@ -48,7 +48,7 @@ export class App {
             key: readFileSync("./cert/privateKey.pem"),
             cert: readFileSync("./cert/publicKey.crt")
         }, this.application);
-        this.httpsServer.listen(process.env.DEV_PORT, () => LOGGER.info(LogMessages.SERVER_START));
+        this.httpsServer.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
         //this.server = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
         this.setRoutes();
     }

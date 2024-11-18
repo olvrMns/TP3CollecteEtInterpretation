@@ -4,8 +4,9 @@
   "author": "olvr",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon src/app.ts",
-    "start": "node dist/app.js"
+    "dev": "SET NODE_ENV=dev&nodemon src/app.ts",
+    "test": "npm run jest",
+    "prod": "NODE_ENV=prod node dist/app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

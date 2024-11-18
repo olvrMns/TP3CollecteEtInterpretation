@@ -15,7 +15,7 @@ export class UserService {
     
     public static jsonUtils: JsonUtils<User> = new JsonUtils<User>();
     private static modelData: ModelData = Schemas[SchemaID.USER];
-    private static instance: MongoDBInquisitor = MongoDBInquisitor.init(String(process.env.MONGODB_URL_DEV));
+    private static instance: MongoDBInquisitor = MongoDBInquisitor.init(String(process.env.MONGODB_URL));
 
     private static mapQueryResult(queryResult: any, aggregation: boolean = true): User[] {
         let users: User[] = [];
@@ -35,7 +35,7 @@ export class UserService {
     }
 
     private static async getResult(pipeline: PipelineStage[]): Promise<User[]> {
-        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, pipeline)); 
+        return this.mapQueryResult(await this.instance.getAggregation(this.modelData, pipeline));
     }
 
     public static async getUsers(): Promise<User[]> {
@@ -52,7 +52,7 @@ export class UserService {
     }
 
     public static async updateRoleByEmail(email: string, role: Roles): Promise<void> {
-        await this.instance.updateOne(this.modelData.collectionName, {email: email}, {role: role});
+        await this.instance.updateOne(this.modelData.collectionName, {email: email}, {$set:{role: role}});
     }
 
     public static async isUnique(attributeName: string, value: string): Promise<boolean> {

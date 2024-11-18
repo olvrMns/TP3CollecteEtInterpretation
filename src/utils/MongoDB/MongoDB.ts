@@ -49,6 +49,7 @@ export class MongoDBInquisitor {
             await callback();
             await this.closeConnection();
         } catch(ex: unknown) {
+            console.log("error: " + ex)
             LOGGER.error(String(ex));
         } finally {
             await this.closeConnection();
@@ -104,9 +105,7 @@ export class MongoDBInquisitor {
         let res: any;
         await this.execute(async () => {
             let Model = this.mongooseInstance?.connection.model(modelData.collectionName, modelData.schema);
-            await Model?.aggregate(pipeline).then((rep) => {
-                res = rep;
-            })
+            res = await Model?.aggregate(pipeline);
         });
         return res;
     }
