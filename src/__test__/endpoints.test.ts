@@ -1,18 +1,16 @@
+jest.useFakeTimers();
 import Dotenv from "dotenv";
 Dotenv.config({path: `${__dirname}/../.${process.env.NODE_ENV}.env`});
 import request from 'supertest';
 import app from '../app';
 
-jest.useFakeTimers();
-
-//expect(2 + 2).toBe(4);
 describe("Endpoints Test", () => {
 
   describe("Authentication", () => {
 
     test("Admin login", async () => {
       const res = await request(app).post("/v2/login")
-      .send({ "username": "morrison@gmail.com", "password": "83r5^_" })
+      .send({ "username": "oli", "password": "83wafawfawfaBfw+a$$44f_" })
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       expect(res.statusCode).toBe(200);
