@@ -7,6 +7,7 @@ import { Server as HTTPSServer, createServer } from "https";
 import { serve, setup } from 'swagger-ui-express';
 import { router as authRouter } from "./routes/auth.route";
 import { router as productRouter } from "./routes/product.route";
+import { router as mainRouter } from "./routes/main.route";
 import { config } from "./swagger";
 import { FakeStore } from "./utils/fakeStore";
 import { LogMessages } from "./utils/log/logMessages";
@@ -39,6 +40,7 @@ export class App {
     public setRoutes() {
         this.application.use(Express.json()); //remove?
         this.application.use(this.version + this.documentationEndPoint, serve, setup(config, { explorer: true}));
+        this.application.use(mainRouter);
         this.application.use(this.version, authRouter);
         this.application.use(this.version, productRouter);
     }
