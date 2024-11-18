@@ -1,6 +1,7 @@
 import supertest from "supertest";
 import { Application } from "express";
 import { App } from "../absApp";
+import { Server } from "https";
 //import { assert, expect, should } from "chai"; //ts file bug
 
 const serv = async (): Promise<Application | undefined> => {
@@ -11,17 +12,23 @@ const serv = async (): Promise<Application | undefined> => {
     return application;
 }
 
-let application: Application | undefined;
+let expressApplication: Application | undefined;
 let adminToken: string | undefined;
 let regUserToken: string | undefined;
+let adminUser = {username: "morrison@gmail.com",password: "83r5^_"};
+let regUser = {username: "oli",password: "83wafawfawfaBfw+a$$44f_"};
 
 describe("Endpoints", () => {
+
+    after(() => {
+        
+    })
 
     describe("Server", () => {
 
         it("Server init", async () => {
-            application = await serv();
-            supertest(application as Application)
+            expressApplication = await serv();
+            supertest(expressApplication as Application)
             .get("/")
             .expect(200);
         })
@@ -31,41 +38,63 @@ describe("Endpoints", () => {
     describe("Authentication", () => {
 
         it("Admin login", async () => {
-            supertest(application as Application)
+            supertest(expressApplication as Application)
             .post("/v2/login")
-            .send({"username": "morrison@gmail.com","password": "83r5^_"})
+            .send(adminUser)
             .expect(200)
             .then((response) => adminToken = response.text);
         })
 
         it("Reg User login", async () => {
-            supertest(application as Application)
+            supertest(expressApplication as Application)
             .post("/v2/login")
-            .send({"username": "oli","password": "83wafawfawfaBfw+a$$44f_"})
+            .send(regUser)
             .expect(200)
             .then((response) => regUserToken = response.text);
         })
         
     })
 
-    // describe("Products", () => {
+    describe("Products", () => {
 
-    //     it("Get All Products", async () => {
+        it("Get All Products", async () => {
+            supertest(expressApplication as Application)
+            .get("/v2/product/")
+            .set('Authorization', `Bearer ${regUserToken}`)
+            .expect(200)
+            .then((response) => {
+                console.log(response)
+            })
+        })
 
-    //     })
+        // it("Get All Products", async () => {
+        //     supertest(expressApplication as Application)
+        // })
 
-    //     it("Get All Products", async () => {
+        // it("Save one product", async () => {
+        //     supertest(expressApplication as Application)
+        // })
 
-    //     })
+        // it("Delete one product", async () => {
+        //     supertest(expressApplication as Application)
+        // })
 
-    //     it("Save one product", async () => {
+        // it("Products by range", async () => {
+        //     supertest(expressApplication as Application)
+        // })
 
-    //     })
+        // it("Products by stock", async () => {
+        //     supertest(expressApplication as Application)
+        // })
 
-    //     it("Delete one product", async () => {
+        // it("Products by price", async () => {
+        //     supertest(expressApplication as Application)
+        // })
 
-    //     })
+        // it("Products by category", async () => {
+        //     supertest(expressApplication as Application)
+        // })
 
-    // })
+    })
 
 })

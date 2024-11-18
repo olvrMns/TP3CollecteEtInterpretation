@@ -50,7 +50,7 @@ export class App {
      * (http)this.server = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
      */
     public start(): Application {
-        this.httpsServer = this.httpsServer = createServer({
+        this.httpsServer = createServer({
             key: readFileSync("./cert/privateKey.pem"),
             cert: readFileSync("./cert/publicKey.crt")
         }, this.application);
