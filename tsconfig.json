@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "noImplicitAny": false,
-    "typeRoots": ["./types"]
+    "types": ["jest", "node", "./types/express/index.d.ts"]
   },
   "include": ["./src/", "./public", "./types"],
   "exclude": ["node_modules", "out"],

@@ -1,4 +1,4 @@
-import '@types/jest';
+
 
 describe("Server.ts tests", () => {
     test("Math test", () => {
@@ -6,3 +6,4 @@ describe("Server.ts tests", () => {
     });
   });
 
+ 
