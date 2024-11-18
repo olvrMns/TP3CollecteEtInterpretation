@@ -1,7 +1,6 @@
-import supertest from "supertest";
 import { Application } from "express";
-import { App } from "../absApp";
-import { Server } from "https";
+import supertest from "supertest";
+import { App } from "../AbsApp";
 //import { assert, expect, should } from "chai"; //ts file bug
 
 let appInstance: App | undefined;
