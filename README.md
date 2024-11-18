@@ -26,3 +26,4 @@
 - [iterate(map)](https://stackoverflow.com/questions/45656257/the-easiest-way-to-iterate-through-a-collection-in-mongoose)
 - [QueryUndefindedAttribute](https://stackoverflow.com/questions/18710043/mongoose-mongodb-result-fields-appear-undefined-in-javascript)
 - [env](https://stackoverflow.com/questions/71901036/how-to-use-different-environments-with-env-files-in-nodejs)
+- [git rename...](https://stackoverflow.com/questions/11183788/in-a-git-repository-how-to-properly-rename-a-directory)
