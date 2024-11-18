@@ -43,14 +43,18 @@ export class App {
         this.application.use(this.version, productRouter);
     }
 
-    public start(): void {
+    /**
+     * @note
+     * (http)this.server = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
+     */
+    public start(): App {
         this.httpsServer = this.httpsServer = createServer({
             key: readFileSync("./cert/privateKey.pem"),
             cert: readFileSync("./cert/publicKey.crt")
         }, this.application);
         this.httpsServer.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
-        //this.server = this.application.listen(process.env.PORT, () => LOGGER.info(LogMessages.SERVER_START));
         this.setRoutes();
+        return this;
     }
 
     public close(): void {

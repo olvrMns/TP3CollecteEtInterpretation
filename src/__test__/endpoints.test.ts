@@ -1,21 +1,15 @@
 import Dotenv from "dotenv";
 Dotenv.config({path: `${__dirname}/../.${process.env.NODE_ENV}.env`});
-import { Request, Response } from 'supertest';
-import mongoose from 'mongoose';
+import app from '../app';
 
 //expect(2 + 2).toBe(4);
 describe("Endpoints Test", () => {
 
-  describe("MongoDB", () => {
-    test("Admin login", async () => {
-      
-    });
-  });
-
   describe("Authentication", () => {
 
     test("Admin login", async () => {
-      
+      // const res = await request(app).post("/v2/login").send({ "username": "morrison@gmail.com", "password": "83r5^_" })
+      // expect(res).toBe();
     });
   
     test("User signup (oli)", async () => {

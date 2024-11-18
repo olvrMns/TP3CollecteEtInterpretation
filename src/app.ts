@@ -1,3 +1,10 @@
 import { App } from "./absApp";
 
-(async () => (await App.getInstance()).start())();
+let app: App | undefined;
+
+(async () => {
+    app = await App.getInstance();
+    app.start();
+})();
+
+export default app?.application;
