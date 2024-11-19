@@ -28,11 +28,12 @@ export class RouteUtils {
             //roles.length == 0 anyone can access 
             // || roles.includes(request.user?.role as Roles) user has the right role(s)
             if (roles.length == 0 || roles.includes(request.user?.role as Roles)) return expressCallback(request, response); 
-            else throw AuthError.notAuthorizedError();
+            else return this.sendUnauthorized(request, response);
         }
     }
 
-    public static sendUnexpectedMessage(response: Response, error: unknown, status: StatusCodes = StatusCodes.UNAUTHORIZED): void {
-        response.status(status).send("Something really unexpected happened! => " + String(error));
+    public static async sendUnauthorized(request: Request, response: Response) {
+        response.status(StatusCodes.UNAUTHORIZED).send("Auth error...");
     }
+
 }

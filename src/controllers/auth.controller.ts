@@ -24,9 +24,7 @@ export class AuthController {
             request.user = await UserService.getUser("email", payload.userInfo.email) as User;
             next();
         } catch (error: unknown) { 
-            response.status(StatusCodes.UNAUTHORIZED);
-            if (error instanceof APIError) response.send(error.message); 
-            else RouteUtils.sendUnexpectedMessage(response, error);
+            response.sendStatus(StatusCodes.UNAUTHORIZED)
         }
     }
 
@@ -37,8 +35,7 @@ export class AuthController {
             if (user) response.status(StatusCodes.OK).send(await AuthService.createToken(user));
             else throw AuthError.credentialsError();
         } catch (error: unknown) {
-            if (error instanceof APIError) response.status(StatusCodes.BAD_REQUEST).send(error.message);
-            else RouteUtils.sendUnexpectedMessage(response, error);
+            response.sendStatus(StatusCodes.UNAUTHORIZED)
         }
     }
 
@@ -49,8 +46,7 @@ export class AuthController {
             await UserService.addUser(user) 
             response.sendStatus(StatusCodes.CREATED);
         } catch (error: unknown) { 
-            if (error instanceof APIError) response.status(StatusCodes.BAD_REQUEST).send(error.message); 
-            else RouteUtils.sendUnexpectedMessage(response, error);
+            response.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR)
         }
     }
 }
